@@ -1,0 +1,10 @@
+/node_modules
+/backend/node_modules
+/.next/
+/out/
+.DS_Store
+.env*.local
+.env
+/backend/.env
+/.codex/
+notes.txt
