@@ -1,5 +1,5 @@
 import clsx from 'clsx'
-import { SHIPPING_FEE, FREE_ABOVE_SUBTOTAL, HIGH_VALUE_SHIPPING_FEE, HIGH_VALUE_THRESHOLD } from './shippingConfig'
+import { SHIPPING_FEE, FREE_ABOVE_SUBTOTAL } from './shippingConfig'
 
 export const cn = (...c) => clsx(...c)
 export const formatPrice = n => '₹' + Number(n).toLocaleString('en-IN')
@@ -32,7 +32,6 @@ export function promoDiscount(applied, cartTotal, shipping = 0) {
 export function promoShipping(applied, cartTotal) {
   if (applied?.type === 'shipping') return 0
   if (FREE_ABOVE_SUBTOTAL != null && cartTotal >= FREE_ABOVE_SUBTOTAL) return 0
-  if (cartTotal > HIGH_VALUE_THRESHOLD) return HIGH_VALUE_SHIPPING_FEE
   return SHIPPING_FEE
 }
 
