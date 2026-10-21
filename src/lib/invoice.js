@@ -135,7 +135,7 @@ export function buildInvoiceHtml(order, format = 'a4') {
   </style>
 </head>
 <body>
-  <div class="brand">Sai Nakshatra Collections</div>
+  <div class="brand">Nizampilla Divya Jewellery</div>
   <div class="meta">Tax Invoice / Order Receipt · ${escapeHtml(order.orderNumber || order.id)} · ${escapeHtml(created)}</div>
 
   <div class="grid">
@@ -179,7 +179,7 @@ export function buildInvoiceHtml(order, format = 'a4') {
 
   ${totalsBlock(order)}
 
-  <div class="footer">Thank you for shopping with Sai Nakshatra Collections.</div>
+  <div class="footer">Thank you for shopping with Nizampilla Divya Jewellery.</div>
   <div class="no-print" style="margin-top:16px;text-align:center;">
     <button onclick="window.print()" style="padding:10px 16px;border:none;border-radius:8px;background:#111;color:#fff;font-weight:700;cursor:pointer;">Print / Save as PDF</button>
   </div>

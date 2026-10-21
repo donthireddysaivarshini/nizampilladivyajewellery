@@ -1,6 +1,6 @@
 import MainLayout from '@/components/layout/MainLayout'
 
-export const metadata = { title: 'Refund Policy — Sai Nakshatra Collections' }
+export const metadata = { title: 'Refund Policy — Nizampilla Divya Jewellery' }
 
 export default function RefundPolicy() {
   return (
@@ -45,7 +45,7 @@ export default function RefundPolicy() {
 
           <section>
             <h2 className="text-[15px] font-bold text-ink uppercase tracking-wide mb-2">Questions</h2>
-            <p>For help with a return or exchange, reach us at <a href="mailto:nakshatrasaigowda@ail.com" className="text-primary font-semibold hover:underline">nakshatrasaigowda@ail.com</a> or call <a href="tel:+918073380149" className="text-primary font-semibold hover:underline">+91 80733 80149</a>.</p>
+            <p>For help with a return or exchange, reach us at <a href="mailto:Chalasanidivya27@gmail.com" className="text-primary font-semibold hover:underline">Chalasanidivya27@gmail.com</a> or call <a href="tel:+919948342710" className="text-primary font-semibold hover:underline">+91 99483 42710</a>.</p>
           </section>
         </div>
       </div>

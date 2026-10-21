@@ -2,7 +2,7 @@ import { Hand } from 'lucide-react'
 import { whatsappLink } from '@/lib/siteConfig'
 
 const GENERIC_MESSAGE =
-  'Hi Sai Nakshatra Collections! I came across your jewellery collection and would like to know more about your products. Could you please help me?'
+  'Hi Nizampilla Divya Jewellery! I came across your jewellery collection and would like to know more about your products. Could you please help me?'
 
 // Floating contact button, fixed to the bottom-right of the viewport. Opens WhatsApp
 // (the configured number) with a pre-filled, URL-encoded message. Pure anchor —
@@ -15,7 +15,7 @@ const GENERIC_MESSAGE =
 //                                    becomes product-aware instead of the generic enquiry.
 export default function WhatsAppButton({ variant = 'floating', productName, className = '' }) {
   const message = productName
-    ? `Hi Sai Nakshatra Collections! I'm interested in the product ${productName}. Could you please help me with more details?`
+    ? `Hi Nizampilla Divya Jewellery! I'm interested in the product ${productName}. Could you please help me with more details?`
     : GENERIC_MESSAGE
 
   return (

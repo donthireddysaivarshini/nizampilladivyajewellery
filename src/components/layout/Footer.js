@@ -91,12 +91,12 @@ export default function Footer() {
               {branding.logoUrl ? (
                 <img 
                   src={branding.logoUrl} 
-                  alt="Sai Nakshatra Collections" 
+                  alt="Nizampilla Divya Jewellery" 
                   className="h-28 w-auto max-w-[260px] object-contain" 
                 />
               ) : (
                 <div className="h-14 w-14 bg-primary/10 rounded flex items-center justify-center text-primary font-bold text-center text-[10px] leading-tight uppercase">
-                  SN <br/> Coll.
+                  ND <br/> Jew.
                 </div>
               )}
             </div>
@@ -116,12 +116,12 @@ export default function Footer() {
             </div>
             <div className="flex items-center gap-3">
               <Mail size={14} className="shrink-0 text-white/70" />
-              <a href="mailto:nakshatrasaigowda@ail.com" className="hover:underline break-all">nakshatrasaigowda@ail.com</a>
+              <a href={`mailto:${SITE_CONTACT.email}`} className="hover:underline break-all">{SITE_CONTACT.email}</a>
             </div>
             <div className="flex items-start gap-3">
               <MapPin size={14} className="mt-0.5 shrink-0 text-white/70" />
               <span className="leading-relaxed text-white/80">
-                528, 13th Main, 23rd Cross, 7th Sector, HSR Layout, Bangalore - 560102
+                {SITE_CONTACT.address}
               </span>
             </div>
           </div>
@@ -187,7 +187,7 @@ export default function Footer() {
         {/* ── BOTTOM CREDIT STRIP (Centered & Scaled) ── */}
         <div className="flex items-center justify-center pt-5 border-t border-white/5 text-center w-full">
           <p className="text-[12px] font-semibold tracking-wide text-white/60">
-            &copy; 2026 Sai Nakshatra Collections. All rights reserved.
+            &copy; 2026 Nizampilla Divya Jewellery. All rights reserved.
           </p>
         </div>
         

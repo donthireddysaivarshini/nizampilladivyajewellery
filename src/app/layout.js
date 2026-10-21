@@ -18,7 +18,7 @@ const montserrat = Montserrat({
 })
 
 export const metadata = {
-  title: 'Sai Nakshatra Collections',
+  title: 'Nizampilla Divya Jewellery',
   description: 'Premium Silver Jewelry Boutique',
   icons: {
     icon: '/favicon.ico',

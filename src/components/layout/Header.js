@@ -214,7 +214,7 @@ export default function Header() {
                       />
                     ) : (
                       <span className="block truncate whitespace-nowrap font-display text-[13px] font-bold tracking-[0.06em] text-ink min-[360px]:text-[15px] sm:text-[19px] md:text-[21px] lg:text-[26px]">
-                        Sai Nakshatra<span className="text-primary">Collections</span>
+                        Nizampilla Divya <span className="text-primary">Jewellery</span>
                       </span>
                     )}
                   </Link>
@@ -337,7 +337,7 @@ export default function Header() {
           <div className={`absolute inset-0 bg-black/50 ${drawerClosing ? 'opacity-0 transition-opacity duration-200' : 'drawer-backdrop-in'}`} onClick={closeDrawer}/>
           <div className={`${drawerClosing ? 'drawer-left-out' : 'drawer-left-in'} absolute left-0 top-0 bottom-0 w-72 bg-white flex flex-col shadow-2xl`}>
             <div className="flex items-center justify-between px-5 py-4 border-b border-line">
-              {branding.logoUrl ? <img src={branding.logoUrl} alt="" className="h-14 max-w-[180px] object-contain" /> : <span className="font-display text-xl font-bold">Sai Nakshatra<span className="text-primary">Collections</span></span>}
+              {branding.logoUrl ? <img src={branding.logoUrl} alt="Nizampilla Divya Jewellery" className="h-14 max-w-[180px] object-contain" /> : <span className="font-display text-xl font-bold">Nizampilla Divya <span className="text-primary">Jewellery</span></span>}
               <button onClick={closeDrawer} className="text-ink-muted hover:text-ink"><X size={20}/></button>
             </div>
             <nav className="flex flex-col py-2 overflow-y-auto flex-1">

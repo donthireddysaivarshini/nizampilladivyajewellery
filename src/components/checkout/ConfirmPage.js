@@ -15,7 +15,7 @@ function ConfirmContent() {
       </div>
       <h1 className="font-display text-6xl font-bold tracking-wide mb-4">ORDER PLACED!</h1>
       <p className="text-[15px] text-ink-muted leading-relaxed mb-7">
-        Thank you for shopping with Sai Nakshatra Collections! Your order is confirmed and will be shipped within 1–2 business days.
+        Thank you for shopping with Nizampilla Divya Jewellery! Your order is confirmed and will be shipped within 1–2 business days.
       </p>
       <div className="inline-block bg-surface-alt border border-line rounded-2xl px-10 py-4 font-display text-[24px] font-bold tracking-widest mb-5">
         {order || 'ORDER CONFIRMED'}

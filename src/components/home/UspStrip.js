@@ -14,7 +14,7 @@ const highlights = [
   {
     id: 'trust',
     Icon: ShieldCheck,
-    title: 'The Sai Nakshatra Promise',
+    title: 'The Nizampilla Divya Promise',
     subtitle: 'Secure & Seamless Shopping',
     desc: 'We guarantee authentic quality across our jewelry lines, complete with 100% encrypted checkouts via Razorpay, simple size exchanges, and free delivery on orders over ₹999.'
   },
@@ -47,7 +47,7 @@ export default function BrandStory() {
             </h2>
             
             <p className="text-[15px] leading-relaxed text-ink-muted">
-              At Sai Nakshatra Collections, we believe jewelry isn’t just an accessory—it’s an extension of your persona. We bridge the gap between high-end luxury aesthetics and accessible, premium silver designs that stand the test of time.
+              At Nizampilla Divya Jewellery, we believe jewelry isn’t just an accessory—it’s an extension of your persona. We bridge the gap between high-end luxury aesthetics and accessible, premium silver designs that stand the test of time.
             </p>
 
             <div className="pt-2">

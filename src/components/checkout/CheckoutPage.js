@@ -156,7 +156,7 @@ export default function CheckoutPage() {
         key: paymentOrder.keyId,
         amount: paymentOrder.razorpayOrder.amount,
         currency: 'INR',
-        name: 'Sai Nakshatra Collections',
+        name: 'Nizampilla Divya Jewellery',
         description: `Order ${order.order_number || order.orderNumber}`,
         order_id: paymentOrder.razorpayOrder.id,
         prefill: { name: selAddr.fullName, contact: selAddr.phone },

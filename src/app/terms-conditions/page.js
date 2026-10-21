@@ -1,6 +1,6 @@
 import MainLayout from '@/components/layout/MainLayout'
 
-export const metadata = { title: 'Terms & Conditions — Sai Nakshatra Collections' }
+export const metadata = { title: 'Terms & Conditions — Nizampilla Divya Jewellery' }
 
 export default function TermsConditions() {
   return (
@@ -13,7 +13,7 @@ export default function TermsConditions() {
         <div className="space-y-8 text-[14px] leading-relaxed text-ink-mid">
           <section>
             <h2 className="text-[15px] font-bold text-ink uppercase tracking-wide mb-2">About Us</h2>
-            <p>Sai Nakshatra Collections offers premium silver jewellery, artificial jewellery, and gemstone pieces. By using this website or placing an order, you agree to the terms below.</p>
+            <p>Nizampilla Divya Jewellery offers premium silver jewellery, artificial jewellery, and gemstone pieces. By using this website or placing an order, you agree to the terms below.</p>
           </section>
 
           <section>
@@ -43,7 +43,7 @@ export default function TermsConditions() {
 
           <section>
             <h2 className="text-[15px] font-bold text-ink uppercase tracking-wide mb-2">Intellectual Property</h2>
-            <p>All content on this site — including product photography, logos, and text — belongs to Sai Nakshatra Collections and may not be reproduced without permission.</p>
+            <p>All content on this site — including product photography, logos, and text — belongs to Nizampilla Divya Jewellery and may not be reproduced without permission.</p>
           </section>
 
           <section>
@@ -53,12 +53,12 @@ export default function TermsConditions() {
 
           <section>
             <h2 className="text-[15px] font-bold text-ink uppercase tracking-wide mb-2">Governing Law</h2>
-            <p>These terms are governed by the laws of India, and any disputes will be subject to the jurisdiction of the courts in Bangalore, Karnataka.</p>
+            <p>These terms are governed by the laws of India, and any disputes will be subject to the jurisdiction of the courts in Hyderabad, Telangana.</p>
           </section>
 
           <section>
             <h2 className="text-[15px] font-bold text-ink uppercase tracking-wide mb-2">Contact Us</h2>
-            <p>Questions about these terms? Reach us at <a href="mailto:nakshatrasaigowda@ail.com" className="text-primary font-semibold hover:underline">nakshatrasaigowda@ail.com</a> or call <a href="tel:+918073380149" className="text-primary font-semibold hover:underline">+91 80733 80149</a>.</p>
+            <p>Questions about these terms? Reach us at <a href="mailto:Chalasanidivya27@gmail.com" className="text-primary font-semibold hover:underline">Chalasanidivya27@gmail.com</a> or call <a href="tel:+919948342710" className="text-primary font-semibold hover:underline">+91 99483 42710</a>.</p>
           </section>
         </div>
       </div>

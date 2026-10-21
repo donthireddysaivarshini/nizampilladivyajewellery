@@ -18,7 +18,7 @@ import { computeDiscountPercent, formatPrice } from '@/lib/utils'
 const money = (value) => formatPrice(Number(value || 0))
 const emptyColorVariant = { name: 'Black', hex: '#111111', images: [''], sizes: [{ size: 'M', stock: 10, priceOverride: 0 }] }
 const emptyProduct = {
-  name: '', slug: '', category: '', brand: 'Sai Nakshatra Collections', subcategory: 'general',
+  name: '', slug: '', category: '', brand: 'Nizampilla Divya Jewellery', subcategory: 'general',
   sellPrice: 999, mrp: 1299, off: 0, sortOrder: 0, tag: '', offerTag: '', stock: 10,
   rating: 0, reviews: 0,
   material: '', care: '', description: '', isFeatured: false, status: 'active', isActive: true,
@@ -501,7 +501,7 @@ try {
         <aside className="hidden w-72 shrink-0 border-r border-line bg-white lg:block">
           <div className="sticky top-0 flex h-screen flex-col p-5">
             <div className="mb-8 rounded-lg border border-line bg-[#111318] p-4 text-white">
-              <p className="text-xs font-black uppercase tracking-[0.18em] text-white/55">Sai Nakshatra Collections</p>
+              <p className="text-xs font-black uppercase tracking-[0.18em] text-white/55">Nizampilla Divya Jewellery</p>
               <h1 className="mt-1 font-display text-2xl font-black">Admin Panel</h1>
             </div>
             <nav className="space-y-1">
@@ -1645,7 +1645,7 @@ function MobileNav({ tab, onNavigate, onRefresh, onLogout, onClose }) {
       <div className="absolute inset-y-0 left-0 flex w-[280px] max-w-[85vw] flex-col bg-white shadow-2xl">
         <div className="flex items-center justify-between border-b border-line p-4">
           <div className="min-w-0">
-            <p className="truncate text-[10px] font-black uppercase tracking-[0.18em] text-ink-muted">Sai Nakshatra Collections</p>
+            <p className="truncate text-[10px] font-black uppercase tracking-[0.18em] text-ink-muted">Nizampilla Divya Jewellery</p>
             <p className="font-display text-lg font-black">Admin Panel</p>
           </div>
           <button onClick={onClose} aria-label="Close navigation" className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border border-line hover:border-primary hover:text-primary"><X size={18}/></button>

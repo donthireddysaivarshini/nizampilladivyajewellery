@@ -6,11 +6,14 @@
 // overridden without a code deploy via NEXT_PUBLIC_CHAT_URL (e.g. wa.me/<number>,
 // a Facebook Messenger link, or any support URL).
 export const SITE_CONTACT = {
-  phone: '+918073380149',
-  phoneDisplay: '+91 80733 80149',
-  chatUrl: process.env.NEXT_PUBLIC_CHAT_URL || 'https://wa.me/918073380149',
+  brandName: 'Nizampilla Divya Jewellery',
+  phone: '+919948342710',
+  phoneDisplay: '+91 99483 42710',
+  email: 'Chalasanidivya27@gmail.com',
+  address: 'Navya enclave-1, 201, pragathi nagar, Hyderabad - 500090',
+  chatUrl: process.env.NEXT_PUBLIC_CHAT_URL || 'https://wa.me/919948342710',
   // Digits only (no +, spaces or dashes) — used to build the WhatsApp click-to-chat link.
-  whatsappNumber: process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || '918073380149'
+  whatsappNumber: process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || '919948342710'
 }
 
 // Standard WhatsApp click-to-chat URL with an optional URL-encoded pre-filled message.
