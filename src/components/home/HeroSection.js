@@ -13,17 +13,14 @@ const FALLBACK_HERO = [
     title: 'MOVE IN STYLE',
     cta: 'Explore Styles',
     ctaLink: '/plp',
-    img: 'https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=1400&q=80',
-    video: ''
+    img: 'https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=1400&q=80'
   }
 ]
 
 export default function HeroSection() {
   const [heroBanners, setHeroBanners] = useState([])
   const [cur, setCur] = useState(0)
-  const [inView, setInView] = useState(true)
   const sectionRef = useRef(null)
-  const videoRef = useRef(null)
   const swipeStartRef = useRef(null)
   const didSwipeRef = useRef(false)
   const total = heroBanners?.length || 1
@@ -36,33 +33,10 @@ export default function HeroSection() {
       .catch(() => setHeroBanners(FALLBACK_HERO))
   }, [])
 
-  const currentHasVideo = Boolean(heroBanners[cur]?.video)
-
   useEffect(() => {
-    if (currentHasVideo) return undefined
     const t = setInterval(next, 5000)
     return () => clearInterval(t)
-  }, [next, currentHasVideo])
-
-  useEffect(() => {
-    const node = sectionRef.current
-    if (!node) return undefined
-    const observer = new IntersectionObserver(([entry]) => {
-      setInView(entry.isIntersecting)
-    }, { threshold: 0.45 })
-    observer.observe(node)
-    return () => observer.disconnect()
-  }, [])
-
-  useEffect(() => {
-    const video = videoRef.current
-    if (!video) return
-    if (inView) {
-      video.play().catch(() => {})
-    } else {
-      video.pause()
-    }
-  }, [cur, inView])
+  }, [next])
 
   const b = heroBanners[cur]
   if (!b) return (
@@ -72,7 +46,6 @@ export default function HeroSection() {
       </div>
     </section>
   )
-  const hasVideo = Boolean(b.video)
 
   const onPointerDown = (event) => {
     swipeStartRef.current = event.clientX
@@ -100,21 +73,7 @@ export default function HeroSection() {
   const mediaClass = 'group relative aspect-[16/9] touch-pan-y select-none overflow-hidden rounded-2xl bg-surface-alt shadow-xl lg:aspect-[21/8]'
   const mediaContent = (
     <>
-      {hasVideo ? (
-        <video
-          ref={videoRef}
-          className="absolute inset-0 h-full w-full object-cover object-center transition-transform duration-700 ease-out group-hover:scale-[1.03]"
-          src={b.video}
-          poster={b.img || undefined}
-          muted
-          playsInline
-          loop
-          autoPlay
-          preload="auto"
-          onCanPlay={() => videoRef.current?.play().catch(() => {})}
-          aria-label={b.title}
-        />
-      ) : b.img ? (
+      {b.img ? (
         <Image
           src={b.img}
           alt={b.title}

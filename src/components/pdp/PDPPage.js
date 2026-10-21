@@ -3,7 +3,7 @@ import { useState, useEffect, useRef, useCallback, useMemo, Suspense } from 'rea
 import Image from 'next/image'
 import Link from 'next/link'
 import { useSearchParams } from 'next/navigation'
-import { ChevronLeft, ChevronRight, Play, Star, X, Heart } from 'lucide-react'
+import { ChevronLeft, ChevronRight, Star, X, Heart } from 'lucide-react'
 import { catalogApi } from '@/lib/api'
 import { useStore } from '@/context/StoreContext'
 import { useWishlist } from '@/context/WishlistContext'
@@ -110,9 +110,6 @@ function ProductGallery({ product, media, mediaIdx, setMediaIdx, isOOS }) {
   const productTags = useMemo(() => getProductTags(product), [product])
 
   const mediaCount = media.length
-  const current = media[mediaIdx]
-  const isVideoItem = current?.type === 'video'
-
   const imageIndexes = useMemo(() => media.map((item, i) => (item.type === 'image' ? i : -1)).filter(i => i >= 0), [media])
   const imageUrls = useMemo(() => media.filter(item => item.type === 'image').map(item => item.url), [media])
   const imagePos = current?.type === 'image' ? imageIndexes.indexOf(mediaIdx) : 0
@@ -126,7 +123,7 @@ function ProductGallery({ product, media, mediaIdx, setMediaIdx, isOOS }) {
       swipeRef.current.didSwipe = false
       return
     }
-    if (!isVideoItem && !isFinePointer()) setViewerOpen(true)
+    if (!isFinePointer()) setViewerOpen(true)
   }
 
   const goToMedia = useCallback((index) => {
@@ -146,7 +143,7 @@ function ProductGallery({ product, media, mediaIdx, setMediaIdx, isOOS }) {
   }, [productTags.length])
 
   const handleMouseMove = (event) => {
-    if (!isFinePointer() || isVideoItem) return
+    if (!isFinePointer()) return
     const rect = event.currentTarget.getBoundingClientRect()
     setZoom({
       active: true,
@@ -193,25 +190,16 @@ function ProductGallery({ product, media, mediaIdx, setMediaIdx, isOOS }) {
   return (
     <>
       <div
-        className={`group/gallery relative mb-3 aspect-[3/4] overflow-hidden rounded-2xl bg-surface-alt shadow-card ${isVideoItem ? '' : 'cursor-zoom-in md:cursor-crosshair'}`}
+        className="group/gallery relative mb-3 aspect-[3/4] overflow-hidden rounded-2xl bg-surface-alt shadow-card cursor-zoom-in md:cursor-crosshair"
         onClick={openViewer}
-        onMouseEnter={() => !isVideoItem && isFinePointer() && setZoom((z) => ({ ...z, active: true }))}
+        onMouseEnter={() => isFinePointer() && setZoom((z) => ({ ...z, active: true }))}
         onMouseMove={handleMouseMove}
         onMouseLeave={() => setZoom((z) => ({ ...z, active: false }))}
         onTouchStart={handleTouchStart}
         onTouchMove={handleTouchMove}
         onTouchEnd={handleTouchEnd}
       >
-        {isVideoItem ? (
-          <video
-            key={current.url}
-            src={current.url}
-            controls
-            playsInline
-            preload="metadata"
-            className="h-full w-full bg-surface-alt object-cover"
-          />
-        ) : current ? (
+        {current ? (
           <>
             <Image
               src={current.url}
@@ -279,20 +267,9 @@ function ProductGallery({ product, media, mediaIdx, setMediaIdx, isOOS }) {
       {mediaCount > 1 && (
         <div className="flex gap-2.5 overflow-x-auto no-scrollbar pb-1">
           {media.map((item, i) => (
-            <button key={`${item.type}-${i}`} onClick={() => setMediaIdx(i)} aria-label={`View ${item.type} ${i + 1}`}
+            <button key={`${item.type}-${i}`} onClick={() => setMediaIdx(i)} aria-label={`View image ${i + 1}`}
               className={`relative h-[88px] w-[72px] flex-none overflow-hidden rounded-xl border-2 bg-surface-alt transition-all ${mediaIdx===i?'border-primary':'border-transparent hover:border-line-dark'}`}>
-              {item.type === 'video' ? (
-                <>
-                  <video src={item.url} muted playsInline preload="metadata" className="h-full w-full object-cover" />
-                  <span className="absolute inset-0 flex items-center justify-center bg-black/20">
-                    <span className="flex h-6 w-6 items-center justify-center rounded-full bg-white/90 shadow">
-                      <Play size={11} className="ml-0.5 text-ink" fill="currentColor" />
-                    </span>
-                  </span>
-                </>
-              ) : (
-                <Image src={item.url} alt="" fill sizes="72px" className="object-cover" />
-              )}
+              <Image src={item.url} alt="" fill sizes="72px" className="object-cover" />
             </button>
           ))}
         </div>
@@ -494,15 +471,8 @@ function PDPContent() {
     const colorImages = (product.colorImages || []).filter(
       img => img.colorName === selColor?.name || img.colorHex === selColor?.hex
     )
-    const colorVideos = (product.colorVideos || []).filter(
-      vid => vid.colorName === selColor?.name || vid.colorHex === selColor?.hex
-    )
     const imageUrls = colorImages.length ? colorImages.map(img => img.imageUrl).filter(Boolean) : (product.images || []).filter(Boolean)
-    const videoUrls = colorVideos.map(vid => vid.videoUrl).filter(Boolean)
-    return [
-      ...imageUrls.map(url => ({ type: 'image', url })),
-      ...videoUrls.map(url => ({ type: 'video', url })),
-    ]
+    return imageUrls.map(url => ({ type: 'image', url }))
   }, [product, selColor])
 
   useEffect(() => {

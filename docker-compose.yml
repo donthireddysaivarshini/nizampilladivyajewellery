@@ -1,0 +1,34 @@
+version: '3.8'
+
+services:
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    ports:
+      - "4000:4000"
+    environment:
+      - NODE_ENV=production
+      - PORT=4000
+      - DATABASE_URL=${DATABASE_URL}
+      - JWT_ACCESS_SECRET=${JWT_ACCESS_SECRET}
+      - JWT_REFRESH_SECRET=${JWT_REFRESH_SECRET}
+      - API_BASE_URL=${API_BASE_URL:-http://localhost:4000}
+      - FRONTEND_URL=${FRONTEND_URL:-http://localhost:3000}
+      - UPLOAD_MAX_FILE_SIZE_MB=10
+      - IMAGE_MAX_DIMENSION=2048
+      - IMAGE_QUALITY=82
+    volumes:
+      # Persistent local storage for uploads to prevent data loss on container rebuilds
+      - backend_uploads:/app/uploads
+    networks:
+      - app-network
+
+volumes:
+  backend_uploads:
+    driver: local
+
+networks:
+  app-network:
+    driver: bridge

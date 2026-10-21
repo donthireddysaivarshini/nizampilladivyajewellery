@@ -5,6 +5,11 @@ import { createReturnExchangeSchema, listReturnExchangeSchema, listExchangeCoupo
 
 export async function returnExchangeRoutes(app) {
   app.post(
+    '/return-exchange/upload-image',
+    { preHandler: requireAuth },
+    returnExchangeController.uploadImage
+  )
+  app.post(
     '/orders/:orderId/items/:itemId/return-exchange-requests',
     { preHandler: [requireAuth, validate(createReturnExchangeSchema)] },
     returnExchangeController.create

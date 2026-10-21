@@ -24,7 +24,7 @@ export const products = [
 ]
 export const heroBanners = [
   { id:1,kicker:'Summer Collection 2026',title:'FRESH DROPS',sub:'Discover bold styles made for those who move fast.',cta:'Shop New Arrivals',ctaLink:'/plp?tag=NEW',img:'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=1400&q=80' },
-  { id:5,kicker:'Video Edit',title:'MOVE IN STYLE',sub:'A motion-led hero demo for campaign drops.',cta:'Explore Styles',ctaLink:'/plp',img:'https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=1400&q=80',video:'https://videos.pexels.com/video-files/853889/853889-hd_1920_1080_25fps.mp4' },
+  { id:5,kicker:'Featured Edit',title:'MOVE IN STYLE',sub:'Refined styles for campaign drops.',cta:'Explore Styles',ctaLink:'/plp',img:'https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=1400&q=80' },
   { id:2,kicker:"Women's Edit",title:'POWER DRESSING',sub:'Bold silhouettes. Refined details. Fashion that speaks.',cta:"Shop Women's",ctaLink:'/plp?category=women',img:'https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=1400&q=80' },
   { id:3,kicker:"Men's Essentials",title:'STREET READY',sub:'Clean fits, sharp layers, everyday confidence.',cta:'Shop Men',ctaLink:'/plp?category=men',img:'https://images.unsplash.com/photo-1516257984-b1b4d707412e?w=1400&q=80' },
   { id:4,kicker:'End of Season Sale',title:'UP TO 50% OFF',sub:'Premium styles at unbeatable prices. Limited stock.',cta:'Shop the Sale',ctaLink:'/plp?tag=SALE',img:'https://images.unsplash.com/photo-1469334031218-e382a71b716b?w=1400&q=80' },

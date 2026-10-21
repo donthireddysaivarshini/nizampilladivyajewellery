@@ -2,7 +2,7 @@
 import { useState } from 'react'
 import { X, UploadCloud, Loader2, Link as LinkIcon } from 'lucide-react'
 import toast from 'react-hot-toast'
-import { returnExchangeApi, uploadApi } from '@/lib/api'
+import { returnExchangeApi } from '@/lib/api'
 
 const REASONS = [
   { value: 'damaged', label: 'Damaged product' },
@@ -30,7 +30,7 @@ export default function ReturnExchangeModal({ order, item, onClose, onSubmitted 
     setUploading(true)
     try {
       for (const file of files) {
-        const uploaded = await uploadApi.uploadImage(file)
+        const uploaded = await returnExchangeApi.uploadEvidence(file)
         setImages(current => [...current, uploaded.url])
       }
     } catch (error) {

@@ -128,7 +128,19 @@ export const returnExchangeApi = {
   create: (orderId, itemId, body) => api(`/api/orders/${orderId}/items/${itemId}/return-exchange-requests`, { method: 'POST', body: JSON.stringify(body) }),
   list: (params = {}) => api(`/api/return-exchange-requests?${new URLSearchParams(Object.entries(params).filter(([, v]) => v !== '' && v != null)).toString()}`),
   get: (id) => api(`/api/return-exchange-requests/${id}`),
-  coupons: (params = {}) => api(`/api/exchange-coupons?${new URLSearchParams(Object.entries(params).filter(([, v]) => v !== '' && v != null)).toString()}`)
+  coupons: (params = {}) => api(`/api/exchange-coupons?${new URLSearchParams(Object.entries(params).filter(([, v]) => v !== '' && v != null)).toString()}`),
+  uploadEvidence: async (file) => {
+    const form = new FormData()
+    form.append('file', file)
+    const res = await fetch(apiUrl('/api/return-exchange/upload-image'), {
+      method: 'POST',
+      credentials: 'include',
+      body: form
+    })
+    const payload = await res.json().catch(() => ({ success: false, message: 'Invalid API response' }))
+    if (!res.ok || payload.success === false) throw new Error(payload.message || 'Evidence upload failed')
+    return payload.data
+  }
 }
 
 export const uploadApi = {
@@ -249,10 +261,10 @@ export const adminApi = {
   createCoupon: (body) => adminApi.request('/api/admin/coupons', { method: 'POST', body: JSON.stringify(body) }),
   updateCoupon: (id, body) => adminApi.request(`/api/admin/coupons/${id}`, { method: 'PATCH', body: JSON.stringify(body) }),
   deleteCoupon: (id) => adminApi.request(`/api/admin/coupons/${id}`, { method: 'DELETE' }),
-  uploadMedia: async (file, kind = 'image') => {
+  uploadMedia: async (file) => {
     const form = new FormData()
     form.append('file', file)
-    const res = await fetch(apiUrl(`/api/uploads/${kind === 'video' ? 'videos' : 'images'}`), {
+    const res = await fetch(apiUrl('/api/uploads/images'), {
       method: 'POST',
       credentials: 'include',
       body: form

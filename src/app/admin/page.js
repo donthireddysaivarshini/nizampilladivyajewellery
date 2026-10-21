@@ -16,7 +16,7 @@ import { computeDiscountPercent, formatPrice } from '@/lib/utils'
 
 
 const money = (value) => formatPrice(Number(value || 0))
-const emptyColorVariant = { name: 'Black', hex: '#111111', images: [''], videos: [], sizes: [{ size: 'M', stock: 10, priceOverride: 0 }] }
+const emptyColorVariant = { name: 'Black', hex: '#111111', images: [''], sizes: [{ size: 'M', stock: 10, priceOverride: 0 }] }
 const emptyProduct = {
   name: '', slug: '', category: '', brand: 'Sai Nakshatra Collections', subcategory: 'general',
   sellPrice: 999, mrp: 1299, off: 0, sortOrder: 0, tag: '', offerTag: '', stock: 10,
@@ -25,7 +25,7 @@ const emptyProduct = {
   highlights: {},
   colorVariants: [emptyColorVariant]
 }
-const emptyHero = { title: '', kicker: '', subtitle: '', ctaLabel: 'Shop Now', ctaLink: '/plp', imageUrl: '', videoUrl: '', sortOrder: 0, status: 'active', isActive: true }
+const emptyHero = { title: '', kicker: '', subtitle: '', ctaLabel: 'Shop Now', ctaLink: '/plp', imageUrl: '', sortOrder: 0, status: 'active', isActive: true }
 const emptyCategory = { name: '', slug: '', imageUrl: '', sortOrder: 0, status: 'active', isActive: true, subcategories: [{ name: '', slug: '', sortOrder: 0 }] }
 const emptyCatalogColor = { name: '', hex: '#111111', sortOrder: 0, status: 'active', isActive: true }
 const emptyCatalogSize = { size: '', sortOrder: 0, status: 'active', isActive: true }
@@ -68,7 +68,6 @@ function toProductForm(product) {
       images: (color.images || []).map(item => item.url || item).filter(Boolean).length
         ? (color.images || []).map(item => item.url || item).filter(Boolean)
         : [''],
-      videos: (color.videos || []).map(item => item.url || item).filter(Boolean),
       sizes: color.sizes?.length ? color.sizes.map(size => ({ size: size.size || '', stock: Number(size.stock || 0), priceOverride: Number(size.priceOverride || 0) })) : [{ size: 'M', stock: 0, priceOverride: 0 }]
     }))
     : buildLegacyColorVariants(product)
@@ -100,7 +99,6 @@ function buildLegacyColorVariants(product) {
     images: [images[Number(color.imageIndex || 0)] || images[0] || ''].filter(Boolean).length
       ? [images[Number(color.imageIndex || 0)] || images[0] || ''].filter(Boolean)
       : [''],
-    videos: [],
     sizes: sizes.length ? sizes : [{ size: 'One Size', stock: Number(product.stock || 0), priceOverride: 0 }]
   }))
 }
@@ -415,7 +413,7 @@ try {
 
   const saveHero = async () => {
     if (!heroForm.title) return toast.error('Hero title is required')
-    if (!heroForm.imageUrl && !heroForm.videoUrl) return toast.error('Add at least one of an image or a video')
+    if (!heroForm.imageUrl) return toast.error('Hero banner image is required')
     setSaving('hero')
     try {
       if (editingHeroId) await adminApi.updateHeroBanner(editingHeroId, heroForm)
@@ -708,19 +706,19 @@ function SelectField({ label, value, onChange, children, readOnly = false }) {
 function FileUpload({ label, kind = 'image', onUploaded }) {
   const [busy, setBusy] = useState(false)
   const upload = async (file) => {
-  if (!file) return
-  setBusy(true)
-  try {
-    const uploaded = await adminApi.uploadMedia(file, kind)
-    onUploaded(uploaded.url)
-    toast.success(`${kind === 'video' ? 'Video' : 'Image'} uploaded`)
-  } catch (error) {
-    toast.error(error.message || 'Upload failed')
-  } finally {
-    setBusy(false)
+    if (!file) return
+    setBusy(true)
+    try {
+      const uploaded = await adminApi.uploadMedia(file)
+      onUploaded(uploaded.url)
+      toast.success('Image uploaded')
+    } catch (error) {
+      toast.error(error.message || 'Upload failed')
+    } finally {
+      setBusy(false)
+    }
   }
-}
-  return <label className="flex min-h-28 cursor-pointer flex-col items-center justify-center rounded-lg border border-dashed border-line bg-surface-alt px-4 py-5 text-center hover:border-primary"><Upload size={22} className="mb-2 text-primary"/><span className="text-sm font-black">{busy ? 'Uploading...' : label}</span><span className="mt-1 text-xs text-ink-muted">Choose from device. Hosted URL is saved automatically.</span><input disabled={busy} type="file" accept={kind === 'video' ? 'video/*' : 'image/*'} onChange={e => upload(e.target.files?.[0])} className="hidden" /></label>
+  return <label className="flex min-h-28 cursor-pointer flex-col items-center justify-center rounded-lg border border-dashed border-line bg-surface-alt px-4 py-5 text-center hover:border-primary"><Upload size={22} className="mb-2 text-primary"/><span className="text-sm font-black">{busy ? 'Uploading...' : label}</span><span className="mt-1 text-xs text-ink-muted">Choose from device. Hosted URL is saved automatically.</span><input disabled={busy} type="file" accept="image/*" onChange={e => upload(e.target.files?.[0])} className="hidden" /></label>
 }
 
 function updateProductPricing(form, patch) {
@@ -870,7 +868,7 @@ function SubcategoryEditor({ rows, onChange }) {
 
 function HeroForm({ form, setForm, onPreview, onSave, onCancel, saving = false }) {
   const set = (key, value) => setForm({ ...form, [key]: value })
-  return <div className="grid gap-4"><div className="grid gap-3 md:grid-cols-2"><Field label="Title" value={form.title} onChange={v => set('title', v)} /><Field label="Kicker" value={form.kicker} onChange={v => set('kicker', v)} /></div><Area label="Subtitle" value={form.subtitle} onChange={v => set('subtitle', v)} /><div className="grid gap-3 md:grid-cols-2"><Field label="CTA label" value={form.ctaLabel} onChange={v => set('ctaLabel', v)} /><Field label="CTA link" value={form.ctaLink} onChange={v => set('ctaLink', v)} /></div><p className="-mt-2 text-xs text-ink-muted">Add at least one of an image or a video. Either one alone is fine.</p><div className="grid gap-3 md:grid-cols-2"><FileUpload label="Upload hero image" onUploaded={url => set('imageUrl', url)} /><FileUpload label="Upload hero video" kind="video" onUploaded={url => set('videoUrl', url)} /></div>{form.imageUrl && <MediaGrid items={[form.imageUrl]} onPreview={(url) => onPreview({ type: 'image', url, title: form.title || 'Hero image' })} onRemove={() => set('imageUrl', '')} />}{form.videoUrl && <MediaGrid items={[form.videoUrl]} type="video" onPreview={(url) => onPreview({ type: 'video', url, title: form.title || 'Hero video' })} onRemove={() => set('videoUrl', '')} />}<div className="grid gap-3 md:grid-cols-2"><Field label="Sort order" type="number" value={form.sortOrder} onChange={v => set('sortOrder', v)} /><SelectField label="Status" value={form.status} onChange={v => set('status', v)}><option>active</option><option>draft</option><option>inactive</option></SelectField></div><FormActions onSave={onSave} onCancel={onCancel} saving={saving} /></div>
+  return <div className="grid gap-4"><div className="grid gap-3 md:grid-cols-2"><Field label="Title" value={form.title} onChange={v => set('title', v)} /><Field label="Kicker" value={form.kicker} onChange={v => set('kicker', v)} /></div><Area label="Subtitle" value={form.subtitle} onChange={v => set('subtitle', v)} /><div className="grid gap-3 md:grid-cols-2"><Field label="CTA label" value={form.ctaLabel} onChange={v => set('ctaLabel', v)} /><Field label="CTA link" value={form.ctaLink} onChange={v => set('ctaLink', v)} /></div><div className="grid gap-3"><FileUpload label="Upload hero image" onUploaded={url => set('imageUrl', url)} /></div>{form.imageUrl && <MediaGrid items={[form.imageUrl]} onPreview={(url) => onPreview({ type: 'image', url, title: form.title || 'Hero image' })} onRemove={() => set('imageUrl', '')} />}<div className="grid gap-3 md:grid-cols-2"><Field label="Sort order" type="number" value={form.sortOrder} onChange={v => set('sortOrder', v)} /><SelectField label="Status" value={form.status} onChange={v => set('status', v)}><option>active</option><option>draft</option><option>inactive</option></SelectField></div><FormActions onSave={onSave} onCancel={onCancel} saving={saving} /></div>
 }
 
 function CouponForm({ form, setForm, onSave, onCancel, saving = false }) {
@@ -960,10 +958,10 @@ function MediaGrid({ items, type = 'image', onPreview, onRemove, readOnly = fals
     {items.map((url, index) => (
       <div key={`${url}-${index}`} className="overflow-hidden rounded-lg border border-line bg-white">
         <div className="relative aspect-[4/3] bg-surface-alt">
-          {type === 'video' ? <video src={url} className="h-full w-full object-cover" muted /> : <img src={url} alt="" className="h-full w-full object-cover" />}
+          <img src={url} alt="" className="h-full w-full object-cover" />
         </div>
         <div className="flex items-center justify-between gap-2 p-2">
-          <span className="truncate text-xs font-bold text-ink-muted">{type === 'video' ? 'Video' : `Image ${index + 1}`}</span>
+          <span className="truncate text-xs font-bold text-ink-muted">{`Image ${index + 1}`}</span>
           <div className="flex gap-1">
             <button onClick={() => onPreview(url)} className="flex h-8 w-8 items-center justify-center rounded-lg border border-line hover:border-primary hover:text-primary" aria-label="Preview media"><Eye size={15}/></button>
             {!readOnly && <button onClick={() => onRemove(index)} className="flex h-8 w-8 items-center justify-center rounded-lg border border-red-200 text-red-500 hover:bg-red-50" aria-label="Remove media"><Trash2 size={14}/></button>}
@@ -978,7 +976,6 @@ function ColorVariantEditor({ rows, colors = [], sizes = [], onChange, onPreview
   const updateColor = (index, patch) => onChange(rows.map((row, i) => i === index ? { ...row, ...patch } : row))
   const updateSizes = (index, sizes) => updateColor(index, { sizes })
   const updateImages = (index, images) => updateColor(index, { images })
-  const updateVideos = (index, videos) => updateColor(index, { videos })
 
   return <div>
     <SectionLabel label="Colors, images & stock" />
@@ -1001,12 +998,6 @@ function ColorVariantEditor({ rows, colors = [], sizes = [], onChange, onPreview
             <p className="mb-2 text-[11px] font-black uppercase tracking-[0.12em] text-ink-muted">Images for {row.name || 'this color'}</p>
             {!readOnly && <FileUpload label={`Upload image for ${row.name || 'color'}`} onUploaded={url => updateImages(index, [...(row.images || []).filter(Boolean), url])} />}
             <MediaGrid items={(row.images || []).filter(Boolean)} onPreview={(url) => onPreview({ type: 'image', url, title: `${row.name || 'Color'} image` })} onRemove={(imageIndex) => updateImages(index, (row.images || []).filter(Boolean).filter((_, i) => i !== imageIndex))} readOnly={readOnly} />
-          </div>
-
-          <div className="mt-4">
-            <p className="mb-2 text-[11px] font-black uppercase tracking-[0.12em] text-ink-muted">Videos for {row.name || 'this color'}</p>
-            {!readOnly && <FileUpload label={`Upload video for ${row.name || 'color'}`} kind="video" onUploaded={url => updateVideos(index, [...(row.videos || []).filter(Boolean), url])} />}
-            <MediaGrid items={(row.videos || []).filter(Boolean)} type="video" onPreview={(url) => onPreview({ type: 'video', url, title: `${row.name || 'Color'} video` })} onRemove={(videoIndex) => updateVideos(index, (row.videos || []).filter(Boolean).filter((_, i) => i !== videoIndex))} readOnly={readOnly} />
           </div>
 
           <div className="mt-4">
@@ -1038,7 +1029,7 @@ function ColorVariantEditor({ rows, colors = [], sizes = [], onChange, onPreview
         </div>
       ))}
     </div>
-    {!readOnly && <button onClick={() => onChange([...rows, { name: '', hex: '#111111', images: [''], videos: [], sizes: [{ size: '', stock: 0, priceOverride: 0 }] }])} className="mt-3 h-10 w-full rounded-lg border border-line text-sm font-bold hover:border-primary hover:text-primary">Add color</button>}
+    {!readOnly && <button onClick={() => onChange([...rows, { name: '', hex: '#111111', images: [''], sizes: [{ size: '', stock: 0, priceOverride: 0 }] }])} className="mt-3 h-10 w-full rounded-lg border border-line text-sm font-bold hover:border-primary hover:text-primary">Add color</button>}
   </div>
 }
 
@@ -1078,7 +1069,7 @@ function VariantMappingModal({ rows, onClose }) {
 }
 
 function PreviewModal({ preview, onClose }) {
-  return <div className="fixed inset-0 z-[950] flex items-start justify-center overflow-y-auto bg-black/70 px-4 py-6 backdrop-blur-sm"><div className="w-full max-w-5xl overflow-hidden rounded-lg bg-white shadow-2xl"><div className="flex items-center justify-between border-b border-line px-5 py-4"><h3 className="font-display text-xl font-black">{preview.title || 'Preview'}</h3><button onClick={onClose} className="flex h-9 w-9 items-center justify-center rounded-lg border border-line hover:border-primary hover:text-primary"><X size={18}/></button></div><div className="bg-[#111318] p-4">{preview.type === 'product' ? <ProductPreview product={preview.product} /> : preview.type === 'video' ? <video src={preview.url} controls className="mx-auto max-h-[72vh] w-full rounded-lg object-contain" /> : <img src={preview.url} alt="" className="mx-auto max-h-[72vh] rounded-lg object-contain" />}</div></div></div>
+  return <div className="fixed inset-0 z-[950] flex items-start justify-center overflow-y-auto bg-black/70 px-4 py-6 backdrop-blur-sm"><div className="w-full max-w-5xl overflow-hidden rounded-lg bg-white shadow-2xl"><div className="flex items-center justify-between border-b border-line px-5 py-4"><h3 className="font-display text-xl font-black">{preview.title || 'Preview'}</h3><button onClick={onClose} className="flex h-9 w-9 items-center justify-center rounded-lg border border-line hover:border-primary hover:text-primary"><X size={18}/></button></div><div className="bg-[#111318] p-4">{preview.type === 'product' ? <ProductPreview product={preview.product} /> : <img src={preview.url} alt="" className="mx-auto max-h-[72vh] rounded-lg object-contain" />}</div></div></div>
 }
 
 function OrderDeleteModal({ order, saving, onCancel, onConfirm }) {

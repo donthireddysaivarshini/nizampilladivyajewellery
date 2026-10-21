@@ -70,7 +70,7 @@ export const catalogRepository = {
        FROM categories c
        WHERE c.deleted_at IS NULL AND c.is_active=true
        ORDER BY c.sort_order, c.name`),
-      query(`SELECT id, kicker, title, subtitle AS sub, cta_label AS cta, cta_link AS "ctaLink", image_url AS img, video_url AS video FROM hero_banners WHERE deleted_at IS NULL AND is_active=true ORDER BY sort_order`),
+      query(`SELECT id, kicker, title, subtitle AS sub, cta_label AS cta, cta_link AS "ctaLink", image_url AS img FROM hero_banners WHERE deleted_at IS NULL AND is_active=true ORDER BY sort_order`),
       this.listProducts({ page: 1, limit: 8, featured: true }),
       this.listProducts({ page: 1, limit: 4, tag: 'NEW', sort: 'newest' }),
       query(`SELECT key, value FROM site_settings WHERE key IN ('footer_marquee','announcement_bar','branding') AND deleted_at IS NULL AND is_active=true`).catch(() => ({ rows: [] }))
@@ -201,12 +201,7 @@ AND (cardinality($12::uuid[]) = 0 OR p.id = ANY($12::uuid[]))
         -- Safe Color Images retrieval
         COALESCE((SELECT json_agg(json_build_object('colorName', color_name, 'colorHex', color_hex, 'imageUrl', image_url, 'sortOrder', sort_order) ORDER BY sort_order) 
                   FROM product_color_images 
-                  WHERE product_id=p.id AND deleted_at IS NULL AND is_active=true), '[]') AS "colorImages",
-                  
-        -- Safe Color Videos retrieval
-        COALESCE((SELECT json_agg(json_build_object('colorName', color_name, 'colorHex', color_hex, 'videoUrl', video_url, 'sortOrder', sort_order) ORDER BY sort_order) 
-                  FROM product_color_videos 
-                  WHERE product_id=p.id AND deleted_at IS NULL AND is_active=true), '[]') AS "colorVideos"
+                  WHERE product_id=p.id AND deleted_at IS NULL AND is_active=true), '[]') AS "colorImages"
                   
        FROM products p
        JOIN categories c ON c.id=p.category_id

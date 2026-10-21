@@ -7,8 +7,6 @@ const nextConfig = {
       { protocol: 'https', hostname: 'plus.unsplash.com' },
       { protocol: 'https', hostname: 'api.dicebear.com' },
       { protocol: 'https', hostname: 'res.cloudinary.com' },
-      // Backblaze B2 public bucket / custom domain (S3-compatible object storage)
-      { protocol: 'https', hostname: '*.backblazeb2.com' },
       // 🌸 Add your local backend image path rules here:
       {
         protocol: 'http',

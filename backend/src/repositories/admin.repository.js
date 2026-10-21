@@ -29,7 +29,6 @@ export const adminRepository = {
         COALESCE((SELECT json_agg(json_build_object('id', id, 'name', name, 'hex', hex, 'imageIndex', image_index, 'sortOrder', sort_order) ORDER BY sort_order) FROM product_colors WHERE product_id=p.id AND deleted_at IS NULL), '[]') AS colors,
         COALESCE((SELECT json_agg(json_build_object('id', id, 'size', size, 'stock', stock, 'sortOrder', sort_order) ORDER BY sort_order) FROM product_sizes WHERE product_id=p.id AND deleted_at IS NULL), '[]') AS sizes,
         COALESCE((SELECT json_agg(json_build_object('colorName', color_name, 'colorHex', color_hex, 'imageUrl', image_url, 'sortOrder', sort_order) ORDER BY sort_order) FROM product_color_images WHERE product_id=p.id AND deleted_at IS NULL), '[]') AS "colorImages",
-        COALESCE((SELECT json_agg(json_build_object('colorName', color_name, 'colorHex', color_hex, 'videoUrl', video_url, 'sortOrder', sort_order) ORDER BY sort_order) FROM product_color_videos WHERE product_id=p.id AND deleted_at IS NULL), '[]') AS "colorVideos",
         COALESCE((SELECT json_agg(json_build_object('colorName', color_name, 'colorHex', color_hex, 'size', size, 'stock', stock, 'priceOverride', price_override, 'sortOrder', sort_order) ORDER BY sort_order) FROM product_variants WHERE product_id=p.id AND deleted_at IS NULL), '[]') AS variants
        FROM products p
        JOIN categories c ON c.id=p.category_id
@@ -153,16 +152,6 @@ if (imageUrls.length === 0) {
       }
 
       await client.query(`DELETE FROM product_color_videos WHERE product_id=$1`, [productId])
-      let colorVideoOrder = 1
-      for (const color of colorVariants) {
-        if (!color?.name || !color?.hex) continue
-        for (const url of (color.videos || []).filter(Boolean)) {
-          await client.query(
-            `INSERT INTO product_color_videos(product_id, color_name, color_hex, video_url, sort_order) VALUES ($1,$2,$3,$4,$5)`,
-            [productId, color.name, color.hex, url, colorVideoOrder++]
-          )
-        }
-      }
 
       await client.query(`DELETE FROM product_variants WHERE product_id=$1`, [productId])
       let variantOrder = 1
@@ -313,17 +302,16 @@ if (imageUrls.length === 0) {
   },
 
   async heroBanners() {
-    const { rows } = await query(`SELECT id, kicker, title, subtitle, cta_label AS "ctaLabel", cta_link AS "ctaLink", image_url AS "imageUrl", video_url AS "videoUrl", sort_order AS "sortOrder", status, is_active AS "isActive" FROM hero_banners WHERE deleted_at IS NULL ORDER BY sort_order, created_at`)
+    const { rows } = await query(`SELECT id, kicker, title, subtitle, cta_label AS "ctaLabel", cta_link AS "ctaLink", image_url AS "imageUrl", sort_order AS "sortOrder", status, is_active AS "isActive" FROM hero_banners WHERE deleted_at IS NULL ORDER BY sort_order, created_at`)
     return rows
   },
 
   async saveHeroBanner(data, id = null) {
     const imageUrl = data.imageUrl || data.img || null
-    const videoUrl = data.videoUrl || data.video || null
-    if (!imageUrl && !videoUrl) {
-      throw Object.assign(new Error('Add at least one of an image or a video'), { statusCode: 400 })
+    if (!imageUrl) {
+      throw Object.assign(new Error('Hero banner image is required'), { statusCode: 400 })
     }
-    const args = [data.kicker || null, data.title, data.subtitle || null, data.ctaLabel || data.cta || null, data.ctaLink || '/plp', imageUrl, videoUrl, Number(data.sortOrder || 0), data.status || 'active', data.isActive !== false]
+    const args = [data.kicker || null, data.title, data.subtitle || null, data.ctaLabel || data.cta || null, data.ctaLink || '/plp', imageUrl, null, Number(data.sortOrder || 0), data.status || 'active', data.isActive !== false]
     const sql = id
       ? `UPDATE hero_banners SET kicker=$1, title=$2, subtitle=$3, cta_label=$4, cta_link=$5, image_url=$6, video_url=$7, sort_order=$8, status=$9, is_active=$10, updated_at=now() WHERE id=$11 RETURNING id`
       : `INSERT INTO hero_banners(kicker, title, subtitle, cta_label, cta_link, image_url, video_url, sort_order, status, is_active) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10) RETURNING id`
@@ -662,7 +650,6 @@ function normalizeColorVariants(data) {
       name: color.name,
       hex: color.hex,
       images: (color.images || []).filter(Boolean),
-      videos: (color.videos || []).filter(Boolean),
       sizes: (color.sizes || []).filter(item => item?.size).map(item => ({
         size: item.size,
         stock: Number(item.stock || 0),
@@ -759,7 +746,6 @@ function titleize(value) {
 function buildColorVariants(product) {
   const variants = product.variants || []
   const colorImages = product.colorImages || []
-  const colorVideos = product.colorVideos || []
   if (variants.length || colorImages.length) {
     const colorMap = new Map()
     variants.forEach(variant => {
@@ -769,7 +755,6 @@ function buildColorVariants(product) {
           name: variant.colorName,
           hex: variant.colorHex,
           images: colorImages.filter(img => img.colorName === variant.colorName && img.colorHex === variant.colorHex).map(img => img.imageUrl),
-          videos: colorVideos.filter(vid => vid.colorName === variant.colorName && vid.colorHex === variant.colorHex).map(vid => vid.videoUrl),
           sizes: []
         })
       }
@@ -784,18 +769,10 @@ function buildColorVariants(product) {
     colorImages.forEach(img => {
       const key = `${img.colorName}::${img.colorHex}`
       if (!colorMap.has(key)) {
-        colorMap.set(key, { name: img.colorName, hex: img.colorHex, images: [], videos: [], sizes: [] })
+        colorMap.set(key, { name: img.colorName, hex: img.colorHex, images: [], sizes: [] })
       }
       const entry = colorMap.get(key)
       if (!entry.images.includes(img.imageUrl)) entry.images.push(img.imageUrl)
-    })
-    colorVideos.forEach(vid => {
-      const key = `${vid.colorName}::${vid.colorHex}`
-      if (!colorMap.has(key)) {
-        colorMap.set(key, { name: vid.colorName, hex: vid.colorHex, images: [], videos: [], sizes: [] })
-      }
-      const entry = colorMap.get(key)
-      if (!entry.videos.includes(vid.videoUrl)) entry.videos.push(vid.videoUrl)
     })
     return [...colorMap.values()]
   }
