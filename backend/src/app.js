@@ -28,7 +28,12 @@ export async function buildApp() {
   
   app.addContentTypeParser('application/json', { parseAs: 'buffer' }, (request, body, done) => {
     request.rawBody = body.toString('utf8')
-    done(null, JSON.parse(request.rawBody || '{}'))
+    try {
+      done(null, JSON.parse(request.rawBody || '{}'))
+    } catch (err) {
+      err.statusCode = 400
+      done(err, undefined)
+    }
   })
 
   // Global Core Middlewares & Config Plugins
