@@ -1,6 +1,5 @@
 import { orderRepository } from '../repositories/order.repository.js'
 import { computeShippingFee } from '../config/shipping.js'
-import { notificationService } from './notification.service.js'
 import { logger } from '../utils/logger.js'
 
 // shipping is only relevant for 'exchange' coupons — their value bundles the original
@@ -48,14 +47,6 @@ export const orderService = {
     const shipping = computeShippingFee(subtotal, { forceFree: promo?.type === 'shipping' })
     const discount = computePromo(promo, subtotal, shipping)
     const order = await orderRepository.createOrder(userId, data, { items, subtotal, discount, shipping, total: subtotal - discount + shipping, promo })
-    // Free orders (fully covered by an exchange coupon) are paid/confirmed immediately
-    // and never go through paymentService.verify() — so this is the only place their
-    // email will ever fire. Razorpay orders are still 'pending' here; their email fires
-    // from paymentService.verify() once payment is actually confirmed (see Task 2 fix).
-    if (order.payment_status === 'paid') {
-      notificationService.sendNewOrderEmail(order.id).catch(error => logger.error('Unhandled error dispatching order email', { orderId: order.id, error: error.message }))
-      notificationService.sendCustomerOrderEmail(order.id, 'order_placed').catch(error => logger.error('Unhandled error dispatching customer order email', { orderId: order.id, error: error.message }))
-    }
     return order
   },
 
@@ -67,9 +58,6 @@ export const orderService = {
   },
   cancel: async (userId, id) => {
     const result = await orderRepository.cancelOrder(userId, id)
-    if (result) {
-      notificationService.sendCustomerOrderEmail(id, 'order_cancelled').catch(error => logger.error('Unhandled error dispatching cancel email', { orderId: id, error: error.message }))
-    }
     return result
   }
 }

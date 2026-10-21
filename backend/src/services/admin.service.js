@@ -2,7 +2,6 @@ import { adminRepository } from '../repositories/admin.repository.js'
 import { catalogRepository } from '../repositories/catalog.repository.js'
 import { userRepository } from '../repositories/user.repository.js'
 import { returnExchangeService } from '../services/returnExchange.service.js'
-import { notificationService } from '../services/notification.service.js'
 import { logger } from '../utils/logger.js'
 
 
@@ -54,19 +53,12 @@ export const adminService = {
   bulkUpdateOrders: async (body) => {
     const ids = Array.isArray(body.ids) ? body.ids : []
     if (!ids.length) throw Object.assign(new Error('Select at least one order'), { statusCode: 400 })
-    const before = await adminRepository.getOrderStatuses(ids)
     const result = await adminRepository.bulkUpdateOrders(ids, body)
-    dispatchStatusEmails(before, body.status)
     return result
   },
   updateOrder: async (id, patch) => {
-    const before = await adminRepository.getOrderStatuses([id])
-    const previousStatus = before.get(id)
     const order = await adminRepository.updateOrder(id, patch)
     if (!order) throw Object.assign(new Error('Order not found'), { statusCode: 404 })
-    if (patch.status && previousStatus && previousStatus !== patch.status) {
-      dispatchStatusEmail(id, patch.status, { trackingUrl: patch.trackingUrl })
-    }
     return order
   },
   deleteOrder: async (id, adminUserId) => {
@@ -118,36 +110,5 @@ function sanitizeSalePopup(input) {
     color: /^#[0-9a-fA-F]{6}$/.test(input.color || '') ? input.color : '#F97316',
     delaySeconds: Number.isFinite(delaySeconds) ? Math.min(60, Math.max(0, delaySeconds)) : 5,
     repeatAfterDays: Math.max(1, Number(input.repeatAfterDays) || 1)
-  }
-}
-
-// Maps an order status to the customer email type. Only statuses that represent a
-// meaningful customer-facing event trigger an email; 'pending'/'confirmed'/'paid'
-// don't (the order_placed email already covers confirmation).
-function statusEmailType(status) {
-  return {
-    shipped: 'order_shipped',
-    delivered: 'order_delivered',
-    cancelled: 'order_cancelled'
-  }[status]
-}
-
-async function dispatchStatusEmail(orderId, status, extra = {}) {
-  const type = statusEmailType(status)
-  if (!type) return
-  try {
-    await notificationService.sendCustomerOrderEmail(orderId, type, extra)
-  } catch (error) {
-    logger.error('Unhandled error dispatching status email', { orderId, status, error: error.message })
-  }
-}
-
-// 'before' is a Map<orderId, previousStatus> captured before the bulk update. Only
-// orders whose status actually changed (and to an event-worthy status) get an email.
-function dispatchStatusEmails(before, newStatus) {
-  const type = statusEmailType(newStatus)
-  if (!type) return
-  for (const [orderId, previousStatus] of before.entries()) {
-    if (previousStatus !== newStatus) dispatchStatusEmail(orderId, newStatus)
   }
 }

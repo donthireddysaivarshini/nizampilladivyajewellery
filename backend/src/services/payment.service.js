@@ -3,7 +3,6 @@ import { env } from '../config/env.js'
 import { razorpay } from '../config/razorpay.js'
 import { orderRepository } from '../repositories/order.repository.js'
 import { paymentRepository } from '../repositories/payment.repository.js'
-import { notificationService } from './notification.service.js'
 import { logger } from '../utils/logger.js'
 
 export const paymentService = {
@@ -35,18 +34,6 @@ export const paymentService = {
       result = await paymentRepository.markPaymentSuccess(data)
     } catch (error) {
       throw Object.assign(new Error(`Payment verification failed: ${error.message}`), { statusCode: 502 })
-    }
-
-    // The new-order email belongs here, not at order creation — this is the point
-    // where payment_status actually becomes 'paid'. orderJustPaid guards against
-    // sending a duplicate email if verify() is retried for an already-paid order.
-    if (result.orderJustPaid) {
-      notificationService.sendNewOrderEmail(data.orderId).catch(error =>
-        logger.error('Unhandled error dispatching order email after payment', { orderId: data.orderId, error: error.message })
-      )
-      notificationService.sendCustomerOrderEmail(data.orderId, 'order_placed').catch(error =>
-        logger.error('Unhandled error dispatching customer order email after payment', { orderId: data.orderId, error: error.message })
-      )
     }
 
     return result

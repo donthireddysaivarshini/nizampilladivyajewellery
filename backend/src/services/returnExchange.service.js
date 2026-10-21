@@ -1,6 +1,5 @@
 import { returnExchangeRepository } from '../repositories/returnExchange.repository.js'
 import { generateCouponCode } from '../utils/couponCode.js'
-import { notificationService } from '../services/notification.service.js'
 import { logger } from '../utils/logger.js'
 
 const DELIVERED_STATUS = 'delivered'
@@ -28,9 +27,6 @@ export const returnExchangeService = {
     }
 
     const request = await returnExchangeRepository.createRequest(userId, orderId, orderItemId, data)
-    notificationService.sendReturnExchangeEmail(request.id, 'request_submitted').catch(error =>
-      logger.error('Unhandled error dispatching return/exchange submitted email', { requestId: request.id, error: error.message })
-    )
     return request
   },
 
@@ -69,18 +65,12 @@ export const returnExchangeService = {
     if (decision === 'rejected') {
       const updated = await returnExchangeRepository.markRejected(id, adminUserId, remarks)
       if (!updated) throw Object.assign(new Error('Unable to reject this request'), { statusCode: 409 })
-      notificationService.sendReturnExchangeEmail(id, 'request_rejected', { adminRemarks: remarks }).catch(error =>
-        logger.error('Unhandled error dispatching rejection email', { requestId: id, error: error.message })
-      )
       return { status: updated.status }
     }
 
     if (request.type === 'return') {
       const updated = await returnExchangeRepository.approveReturn(id, adminUserId, remarks)
       if (!updated) throw Object.assign(new Error('Unable to approve this request'), { statusCode: 409 })
-      notificationService.sendReturnExchangeEmail(id, 'request_approved', { adminRemarks: remarks }).catch(error =>
-        logger.error('Unhandled error dispatching return-approved email', { requestId: id, error: error.message })
-      )
       return { status: updated.status }
     }
 
@@ -130,12 +120,6 @@ export const returnExchangeService = {
       if (lastError) throw lastError
       throw Object.assign(new Error('Unable to approve this request'), { statusCode: 409 })
     }
-    notificationService.sendReturnExchangeEmail(id, 'request_approved', {
-      adminRemarks: remarks,
-      coupon: result.coupon
-    }).catch(error =>
-      logger.error('Unhandled error dispatching exchange-approved email', { requestId: id, error: error.message })
-    )
     return { status: result.request.status, coupon: result.coupon }
   },
 
