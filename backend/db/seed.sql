@@ -26,16 +26,16 @@ INSERT INTO user_notification_preferences(user_id)
 SELECT id FROM users WHERE email='rahul@example.com'
 ON CONFLICT (user_id) DO NOTHING;
 
--- 8 Core Jewellery Categories with verified 200 OK Unsplash photos
+-- 8 Core Jewellery Categories with verified 200 OK Indian jewellery photos
 INSERT INTO categories(name, slug, image_url, sort_order) VALUES
-('Necklaces & Chokers', 'necklaces', 'https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?w=400&q=80', 1),
-('Earrings & Jhumkas', 'earrings', 'https://images.unsplash.com/photo-1596944924616-7b38e7cfac36?w=400&q=80', 2),
-('Bangles & Kadas', 'bangles', 'https://images.unsplash.com/photo-1629224316810-9d8805b95e76?w=400&q=80', 3),
-('Bridal Collection', 'bridal', 'https://images.unsplash.com/photo-1573408301185-9146fe634ad0?w=400&q=80', 4),
-('Silver Jewellery', 'silver-jewellery', 'https://images.unsplash.com/photo-1605100804763-247f67b3557e?w=400&q=80', 5),
-('Rings', 'rings', 'https://images.unsplash.com/photo-1603561591411-07134e71a2a9?w=400&q=80', 6),
-('Mangalsutras', 'mangalsutras', 'https://images.unsplash.com/photo-1602751584552-8ba73aad10e1?w=400&q=80', 7),
-('Anklets & Payal', 'anklets', 'https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?w=400&q=80', 8)
+('Necklaces & Chokers', 'necklaces', 'https://images.unsplash.com/photo-1758995115857-2de1eb6283d0?w=600&q=80', 1),
+('Earrings & Jhumkas', 'earrings', 'https://images.unsplash.com/photo-1743794444092-3ad1ab04f968?w=600&q=80', 2),
+('Bangles & Kadas', 'bangles', 'https://images.unsplash.com/photo-1629224316810-9d8805b95e76?w=600&q=80', 3),
+('Bridal Collection', 'bridal', 'https://images.unsplash.com/photo-1573408301185-9146fe634ad0?w=600&q=80', 4),
+('Silver Jewellery', 'silver-jewellery', 'https://images.unsplash.com/photo-1650873442159-65dda3860134?w=600&q=80', 5),
+('Rings', 'rings', 'https://images.unsplash.com/photo-1770346279037-89853a3e8c60?w=600&q=80', 6),
+('Mangalsutras', 'mangalsutras', 'https://images.unsplash.com/photo-1673960188795-8487e65466b2?w=600&q=80', 7),
+('Anklets & Payal', 'anklets', 'https://images.unsplash.com/photo-1778148046621-4c1aecb22146?w=600&q=80', 8)
 ON CONFLICT (slug) DO UPDATE SET name=EXCLUDED.name, image_url=EXCLUDED.image_url, sort_order=EXCLUDED.sort_order, deleted_at=NULL, is_active=true;
 
 -- Brands
@@ -53,17 +53,17 @@ SELECT c.id, b.id, p.name, p.slug, p.subcategory, p.sell_price, p.mrp, p.discoun
 FROM (VALUES
   ('necklaces','Nizampilla Divya Jewellery','Royal Kundan & Pearl Choker Set','kundan-pearl-choker-set','kundan-sets',4499,7999,44,'BESTSELLER','BRIDAL EDIT',12,'Brass alloy with 24K Micro Gold Plating & Hand-cut Kundan stones with natural freshwater pearls','Keep away from water, perfume, and harsh chemicals. Store in airtight zip pouch after use.','An opulent handcrafted choker necklace adorned with radiant Kundan stones, emerald green accents, and cascading pearl drops. Paired with matching statement earrings and a maang tikka.',true,4.8,142),
   ('necklaces','Royal Heritage','Antique Lakshmi Temple Necklace','antique-lakshmi-temple-necklace','temple-necklaces',5899,9999,41,'NEW','TEMPLE CRAFT',8,'Temple Brass alloy with antique matte gold finish and genuine red Kemp stones','Wipe gently with dry soft cloth. Avoid direct contact with moisture.','Sacred Goddess Lakshmi motifs intricately carved in Nakshi style, bordered by Kemp cabochon stones and cluster bell drops. Complete with matching heritage jhumkas.',true,4.9,86),
-  ('rings','Divya Silver Craft','925 Pure Silver Solitaire Ring','925-pure-silver-solitaire-ring','solitaire-rings',1899,3299,42,'BESTSELLER','925 SILVER',15,'Hallmarked 92.5% Sterling Silver with Triple Rhodium Polish and 2-carat Hearts & Arrows CZ Solitaire','Comes with anti-tarnish coating. Clean with silver polishing cloth.','A breathtaking 2-carat brilliant cut CZ diamond set on a polished 925 sterling silver band with accent pavé stones. Perfect for proposals, anniversaries, and daily glamour.',true,4.7,118),
+  ('rings','Divya Silver Craft','Heritage Kundan Arsi Cocktail Ring','925-pure-silver-solitaire-ring','kundan-rings',1899,3299,42,'BESTSELLER','ROYAL EDIT',15,'Brass alloy with 22K yellow gold plating, uncut mirror polki stones and pearl cluster border','Keep away from water and perfume. Store in velvet box.','A grand traditional royal Indian mirror arsi ring with floral Kundan petal setting and dainty seed pearl halo.',true,4.7,118),
   ('earrings','Nizampilla Divya Jewellery','Peacock Kemp Grand Jhumkas','peacock-kemp-grand-jhumkas','jhumkas',2499,4199,40,'NEW','FESTIVE',14,'Brass with 22K matte gold plating, Kemp red stones, and dangling seed pearls','Handle with care. Avoid perfumes and moisture.','Majestic twin peacocks sculpted above two-tier ornate bell domes with fine filigree work and delicate pearl hangings.',true,4.6,94),
   ('bridal','Nakshatra Signature','American Diamond CZ Bridal Set','american-diamond-cz-bridal-set','bridal-sets',8999,14999,40,'LUXURY','BRIDAL FAVOURITE',6,'High-grade AAA Swiss Zirconia with two-tone Platinum and Rose Gold rhodium plating','Store individually in velvet box provided.','Stunning collar necklace encrusted with brilliant-cut pear and marquise CZ diamonds that glisten like natural diamonds, complete with chandelier drop earrings.',true,4.9,64),
   ('bangles','Royal Heritage','Traditional Gold Plated Temple Kadas','traditional-gold-temple-kadas','antique-kadas',3299,5499,40,'SALE','PAIR OF 2',18,'Copper-brass base with 1 gram micro gold plating and side screw opening','Wipe with a clean dry cotton cloth. Do not soak in water.','Heavy royal kadas featuring relief carvings of floral vines and elephant motifs with secure screw closure.',true,4.5,78),
   ('silver-jewellery','Divya Silver Craft','Oxidised Silver Tribal Hasli Necklace','oxidised-silver-tribal-hasli','oxidised-necklaces',1699,2899,41,'TRENDING',null,11,'German silver alloy with antique black oxidised polish','Keep dry. Polish with cotton to maintain vintage patina.','Bohemian rigid collar hasli necklace adorned with ghungroo bells and geometric mirror medallions.',false,4.4,52),
-  ('bangles','Nakshatra Signature','Cubic Zirconia Tennis Bracelet','cz-tennis-bracelet','cz-bangles',2199,3799,42,'BESTSELLER',null,16,'Pure brass with premium white gold rhodium plating and prong-set 4mm round brilliant CZ crystals','Remove before bathing or swimming.','Timeless tennis bracelet featuring a continuous line of individually hand-set sparkling stones with double safety clasp.',true,4.8,135),
+  ('bangles','Nakshatra Signature','Royal Bridal Gold Hathphool & Bangles','cz-tennis-bracelet','bridal-bangles',2199,3799,42,'BESTSELLER','BRIDAL WEAR',16,'Pure brass with 22K micro gold plating, floral Kundan centerpieces and adjustable ring links','Remove before bathing or contact with water.','Intricate traditional Indian bridal hathphool featuring flower-shaped Kundan medallions, cascading pearl chains and matching gold bangles.',true,4.8,135),
   ('earrings','Nizampilla Divya Jewellery','Polki & Emerald Chandbali Earrings','polki-emerald-chandbali-earrings','chandbalis',2799,4699,40,'NEW','ROYAL EDIT',10,'Gold polished alloy with uncut open-setting Polki stones, green hydro beads and pearl fringe','Store flat in the provided jewellery box.','Crescent moon chandbali earrings handcrafted with uncut Polki stones, faux Colombian emerald stones, and delicate pearl tassels.',true,4.7,67),
-  ('silver-jewellery','Divya Silver Craft','925 Silver Evil Eye Pendant Chain','silver-evil-eye-pendant-chain','925-silver-chains',1499,2499,40,'POPULAR',null,19,'Certified 925 Sterling Silver with Mother of Pearl and blue enamel eye','Tarnish-resistant finish. Avoid perfumes.','Dainty protective talisman crafted in authentic 925 silver on an adjustable 16-18 inch delicate cable chain.',false,4.6,91),
-  ('mangalsutras','Nizampilla Divya Jewellery','Classic Solitaire Mangalsutra','classic-solitaire-mangalsutra','short-mangalsutra',2299,3899,41,'DAILY WEAR',null,14,'18K yellow gold plated brass with genuine black onyx beads and solitaire CZ centerpiece','Safe for daily use. Keep away from harsh detergents.','Contemporary short mangalsutra chain with single round solitaire pendant nestled between auspicious black beads.',false,4.5,48),
+  ('necklaces','Divya Silver Craft','Traditional Kasu Mala Long Haram','silver-evil-eye-pendant-chain','temple-necklaces',2499,3999,38,'POPULAR','HERITAGE',19,'Temple copper alloy with 24K antique matte gold polish and embossed Lakshmi coin motifs','Tarnish-resistant finish. Avoid perfumes.','A timeless South Indian Kasu Mala adorned with auspicious Goddess Lakshmi coins strung closely along a braided gold rope border.',false,4.6,91),
+  ('mangalsutras','Nizampilla Divya Jewellery','Traditional Gold & Black Bead Mangalsutra','classic-solitaire-mangalsutra','short-mangalsutra',2299,3899,41,'DAILY WEAR','AUSPICIOUS',14,'18K yellow gold plated brass with authentic auspicious black beads and temple pendant','Safe for daily use. Keep away from harsh detergents.','Authentic double-line black bead chain featuring a handcrafted traditional gold pendant with floral filigree detailing.',false,4.5,48),
   ('bridal','Nizampilla Divya Jewellery','Bridal Kundan Matha Patti & Tikka','bridal-kundan-matha-patti','matha-patti',3499,5999,42,'BRIDAL','HANDMADE',7,'24K Gold Polish with Meenakari back-detailing and Kundan stone multi-strand hair chains','Handle gently. Secure with bobby pins provided.','Majestic multi-layered bridal headpiece that frames the forehead with luminous pearl strands and floral Kundan medallions.',true,4.9,39),
-  ('rings','Nakshatra Signature','Floral CZ Cocktail Statement Ring','floral-cz-cocktail-ring','cocktail-rings',1599,2799,43,'SALE',null,12,'High polish rhodium on brass with multi-shape marquise and round cut CZ crystals','Wipe with a soft jewellery cloth after each wear.','Grand blooming blossom cocktail ring designed to make a head-turning statement at evening galas and wedding receptions.',false,4.6,62),
+  ('rings','Nakshatra Signature','Royal Meenakari Floral Cocktail Ring','floral-cz-cocktail-ring','cocktail-rings',1599,2799,43,'SALE','HANDCRAFTED',12,'Brass alloy with 22K yellow gold plating, vibrant enamel Meenakari and hand-set Kundan stones','Wipe with a soft jewellery cloth after each wear.','Opulent blooming flower statement ring adorned with royal peacock blue enamel, red highlights, and sparkling Kundan center.',false,4.6,62),
   ('anklets','Divya Silver Craft','Sterling Silver Ghungroo Payal Anklets','silver-ghungroo-payal-anklets','payal-anklets',2999,4999,40,'NEW','PAIR OF 2',9,'92.5% Purity Sterling Silver with musical silver bells and strong S-hook clasp','Clean with mild soapy water or silver dip. Dry completely.','Pure silver pair of payal anklets with sweet chime bells that ring softly with every step.',false,4.8,44),
   ('necklaces','Nizampilla Divya Jewellery','Emerald Green Hydro Bead Layered Mala','emerald-hydro-bead-layered-mala','temple-necklaces',3199,5499,42,'ROYAL EDIT',null,10,'Faceted green hydro beads with antique gold carved spacer beads and temple brooch pendant','Do not pull abruptly. Store hanging or flat.','Grand 5-layer cascading necklace crafted with royal emerald green crystal beads, accented with antique gold polish temple spacers.',true,4.8,58)
 ) AS p(category_slug, brand_name, name, slug, subcategory, sell_price, mrp, discount_percent, tag, offer_tag, stock, material, care, description, is_featured, rating, reviews)
@@ -106,18 +106,18 @@ FROM products p
 JOIN (VALUES
   ('kundan-pearl-choker-set','https://images.unsplash.com/photo-1535632787350-4e68ef0ac584?w=800&q=80',1),
   ('antique-lakshmi-temple-necklace','https://images.unsplash.com/photo-1589128777073-263566ae5e4d?w=800&q=80',1),
-  ('925-pure-silver-solitaire-ring','https://images.unsplash.com/photo-1605100804763-247f67b3557e?w=800&q=80',1),
-  ('peacock-kemp-grand-jhumkas','https://images.unsplash.com/photo-1596944924616-7b38e7cfac36?w=800&q=80',1),
+  ('925-pure-silver-solitaire-ring','https://images.unsplash.com/photo-1770346279037-89853a3e8c60?w=800&q=80',1),
+  ('peacock-kemp-grand-jhumkas','https://images.unsplash.com/photo-1743794444092-3ad1ab04f968?w=800&q=80',1),
   ('american-diamond-cz-bridal-set','https://images.unsplash.com/photo-1617038220319-276d3cfab638?w=800&q=80',1),
   ('traditional-gold-temple-kadas','https://images.unsplash.com/photo-1629224316810-9d8805b95e76?w=800&q=80',1),
-  ('oxidised-silver-tribal-hasli','https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?w=800&q=80',1),
-  ('cz-tennis-bracelet','https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?w=800&q=80',1),
+  ('oxidised-silver-tribal-hasli','https://images.unsplash.com/photo-1650873442159-65dda3860134?w=800&q=80',1),
+  ('cz-tennis-bracelet','https://images.unsplash.com/photo-1762162089047-97e09435984d?w=800&q=80',1),
   ('polki-emerald-chandbali-earrings','https://images.unsplash.com/photo-1617038260897-41a1f14a8ca0?w=800&q=80',1),
-  ('silver-evil-eye-pendant-chain','https://images.unsplash.com/photo-1598560917505-59a3ad559071?w=800&q=80',1),
-  ('classic-solitaire-mangalsutra','https://images.unsplash.com/photo-1602751584552-8ba73aad10e1?w=800&q=80',1),
+  ('silver-evil-eye-pendant-chain','https://images.unsplash.com/photo-1662561516992-5bf89d3aab8b?w=800&q=80',1),
+  ('classic-solitaire-mangalsutra','https://images.unsplash.com/photo-1673960188795-8487e65466b2?w=800&q=80',1),
   ('bridal-kundan-matha-patti','https://images.unsplash.com/photo-1588444837495-c6cfeb53f32d?w=800&q=80',1),
-  ('floral-cz-cocktail-ring','https://images.unsplash.com/photo-1603561591411-07134e71a2a9?w=800&q=80',1),
-  ('silver-ghungroo-payal-anklets','https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?w=800&q=80',1),
+  ('floral-cz-cocktail-ring','https://images.unsplash.com/photo-1770346279037-89853a3e8c60?w=800&q=80',1),
+  ('silver-ghungroo-payal-anklets','https://images.unsplash.com/photo-1778148046621-4c1aecb22146?w=800&q=80',1),
   ('emerald-hydro-bead-layered-mala','https://images.unsplash.com/photo-1601121141461-9d6647bca1ed?w=800&q=80',1)
 ) AS i(slug, url, sort_order) ON i.slug=p.slug
 ON CONFLICT DO NOTHING;
@@ -187,12 +187,12 @@ JOIN (VALUES
 ) AS s(slug, size, stock, sort_order) ON s.slug=p.slug
 ON CONFLICT (product_id, size) DO UPDATE SET stock=EXCLUDED.stock, updated_at=now();
 
--- Hero Banners (Verified 200 OK Jewellery & Bridal Photos)
+-- Hero Banners (Verified 200 OK Indian Jewellery & Bridal Photos)
 DELETE FROM hero_banners;
 INSERT INTO hero_banners(kicker, title, subtitle, cta_label, cta_link, image_url, sort_order) VALUES
 ('Bridal & Festive 2026', 'ROYAL HERITAGE', 'Handcrafted 22K gold polish & authentic Kundan bridal sets made to captivate.', 'Explore Bridal Sets', '/plp?category=bridal', 'https://images.unsplash.com/photo-1573408301185-9146fe634ad0?w=1400&q=80', 1),
-('925 Sterling Silver', 'CELESTIAL SPARKLE', 'Pure 92.5 silver jewellery with high-grade CZ diamonds and rhodium finish.', 'Shop Silver Collection', '/plp?category=silver-jewellery', 'https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?w=1400&q=80', 2),
-('Temple Craft Edit', 'TEMPLE & JHUMKAS', 'Traditional South Indian Kemp stone jhumkas, chokers and nakshi craftsmanship.', 'View Traditional Designs', '/plp?category=earrings', 'https://images.unsplash.com/photo-1588444837495-c6cfeb53f32d?w=1400&q=80', 3);
+('Festive Saree & Temple Edit', 'TEMPLE & JHUMKAS', 'Traditional South Indian Kemp stone jhumkas, chokers and nakshi craftsmanship.', 'View Traditional Designs', '/plp?category=earrings', 'https://images.unsplash.com/photo-1771654805882-95967672e6c1?w=1400&q=80', 2),
+('Heritage Kundan & Matha Patti', 'BRIDAL ADORNMENTS', 'Authentic handcrafted temple kadas and bridal hair jewellery.', 'Shop Bridal Collection', '/plp?category=bridal', 'https://images.unsplash.com/photo-1588444837495-c6cfeb53f32d?w=1400&q=80', 3);
 
 -- Site Settings
 INSERT INTO site_settings(key, value) VALUES

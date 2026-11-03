@@ -1,12 +1,12 @@
 export const categories = [
-  { id: 'necklaces',        name: 'Necklaces & Chokers', slug: 'necklaces',        img: 'https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?w=400&q=80' },
-  { id: 'earrings',         name: 'Earrings & Jhumkas',  slug: 'earrings',         img: 'https://images.unsplash.com/photo-1596944924616-7b38e7cfac36?w=400&q=80' },
-  { id: 'bangles',          name: 'Bangles & Kadas',     slug: 'bangles',          img: 'https://images.unsplash.com/photo-1629224316810-9d8805b95e76?w=400&q=80' },
-  { id: 'bridal',           name: 'Bridal Collection',   slug: 'bridal',           img: 'https://images.unsplash.com/photo-1573408301185-9146fe634ad0?w=400&q=80' },
-  { id: 'silver-jewellery', name: 'Silver Jewellery',    slug: 'silver-jewellery', img: 'https://images.unsplash.com/photo-1605100804763-247f67b3557e?w=400&q=80' },
-  { id: 'rings',            name: 'Rings',               slug: 'rings',            img: 'https://images.unsplash.com/photo-1603561591411-07134e71a2a9?w=400&q=80' },
-  { id: 'mangalsutras',     name: 'Mangalsutras',        slug: 'mangalsutras',     img: 'https://images.unsplash.com/photo-1602751584552-8ba73aad10e1?w=400&q=80' },
-  { id: 'anklets',          name: 'Anklets & Payal',     slug: 'anklets',          img: 'https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?w=400&q=80' },
+  { id: 'necklaces',        name: 'Necklaces & Chokers', slug: 'necklaces',        img: 'https://images.unsplash.com/photo-1758995115857-2de1eb6283d0?w=600&q=80' },
+  { id: 'earrings',         name: 'Earrings & Jhumkas',  slug: 'earrings',         img: 'https://images.unsplash.com/photo-1743794444092-3ad1ab04f968?w=600&q=80' },
+  { id: 'bangles',          name: 'Bangles & Kadas',     slug: 'bangles',          img: 'https://images.unsplash.com/photo-1629224316810-9d8805b95e76?w=600&q=80' },
+  { id: 'bridal',           name: 'Bridal Collection',   slug: 'bridal',           img: 'https://images.unsplash.com/photo-1573408301185-9146fe634ad0?w=600&q=80' },
+  { id: 'silver-jewellery', name: 'Silver Jewellery',    slug: 'silver-jewellery', img: 'https://images.unsplash.com/photo-1650873442159-65dda3860134?w=600&q=80' },
+  { id: 'rings',            name: 'Rings',               slug: 'rings',            img: 'https://images.unsplash.com/photo-1770346279037-89853a3e8c60?w=600&q=80' },
+  { id: 'mangalsutras',     name: 'Mangalsutras',        slug: 'mangalsutras',     img: 'https://images.unsplash.com/photo-1673960188795-8487e65466b2?w=600&q=80' },
+  { id: 'anklets',          name: 'Anklets & Payal',     slug: 'anklets',          img: 'https://images.unsplash.com/photo-1778148046621-4c1aecb22146?w=600&q=80' },
 ]
 
 export const products = [
@@ -71,22 +71,22 @@ export const products = [
   },
   {
     id: 3,
-    name: '925 Pure Silver Solitaire Ring',
+    name: 'Heritage Kundan Arsi Cocktail Ring',
     brand: 'Divya Silver Craft',
     slug: '925-pure-silver-solitaire-ring',
     category: 'rings',
-    subcategory: 'solitaire-rings',
+    subcategory: 'kundan-rings',
     sellPrice: 1899,
     mrp: 3299,
     off: 42,
     tag: 'BESTSELLER',
-    offerTag: '925 SILVER',
+    offerTag: 'ROYAL EDIT',
     stock: 15,
-    material: 'Hallmarked 92.5% Sterling Silver with Triple Rhodium Polish and 2-carat Hearts & Arrows CZ Solitaire',
-    care: 'Comes with anti-tarnish coating. Clean with silver polishing cloth.',
-    description: 'A breathtaking 2-carat brilliant cut CZ diamond set on a polished 925 sterling silver band with accent pavé stones. Perfect for proposals, anniversaries, and daily glamour.',
+    material: 'Brass alloy with 22K yellow gold plating, uncut mirror polki stones and pearl cluster border',
+    care: 'Keep away from water and perfume. Store in velvet box.',
+    description: 'A grand traditional royal Indian mirror arsi ring with floral Kundan petal setting and dainty seed pearl halo.',
     colors: [
-      { name: '925 Silver', hex: '#C0C0C0', imageIndex: 0 },
+      { name: '22K Gold Polish', hex: '#D4AF37', imageIndex: 0 },
       { name: 'Rose Gold', hex: '#B76E79', imageIndex: 0 }
     ],
     sizes: [
@@ -96,7 +96,7 @@ export const products = [
       { size: 'Adjustable', stock: 2 }
     ],
     images: [
-      'https://images.unsplash.com/photo-1605100804763-247f67b3557e?w=800&q=80'
+      'https://images.unsplash.com/photo-1770346279037-89853a3e8c60?w=800&q=80'
     ],
     isFeatured: true,
     rating: 4.7,
@@ -126,7 +126,7 @@ export const products = [
       { size: 'Free Size', stock: 14 }
     ],
     images: [
-      'https://images.unsplash.com/photo-1596944924616-7b38e7cfac36?w=800&q=80'
+      'https://images.unsplash.com/photo-1743794444092-3ad1ab04f968?w=800&q=80'
     ],
     isFeatured: true,
     rating: 4.6,
@@ -217,7 +217,7 @@ export const products = [
       { size: 'Adjustable Dori', stock: 11 }
     ],
     images: [
-      'https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?w=800&q=80'
+      'https://images.unsplash.com/photo-1650873442159-65dda3860134?w=800&q=80'
     ],
     isFeatured: false,
     rating: 4.4,
@@ -225,30 +225,29 @@ export const products = [
   },
   {
     id: 8,
-    name: 'Cubic Zirconia Tennis Bracelet',
+    name: 'Royal Bridal Gold Hathphool & Bangles',
     brand: 'Nakshatra Signature',
     slug: 'cz-tennis-bracelet',
     category: 'bangles',
-    subcategory: 'cz-bangles',
+    subcategory: 'bridal-bangles',
     sellPrice: 2199,
     mrp: 3799,
     off: 42,
     tag: 'BESTSELLER',
-    offerTag: null,
+    offerTag: 'BRIDAL WEAR',
     stock: 16,
-    material: 'Pure brass with premium white gold rhodium plating and prong-set 4mm round brilliant CZ crystals',
-    care: 'Remove before bathing or swimming.',
-    description: 'Timeless tennis bracelet featuring a continuous line of individually hand-set sparkling stones with double safety clasp.',
+    material: 'Pure brass with 22K micro gold plating, floral Kundan centerpieces and adjustable ring links',
+    care: 'Remove before bathing or contact with water.',
+    description: 'Intricate traditional Indian bridal hathphool featuring flower-shaped Kundan medallions, cascading pearl chains and matching gold bangles.',
     colors: [
-      { name: '925 Silver', hex: '#C0C0C0', imageIndex: 0 },
-      { name: 'Rose Gold', hex: '#B76E79', imageIndex: 0 },
-      { name: '22K Gold Polish', hex: '#D4AF37', imageIndex: 0 }
+      { name: '22K Gold Polish', hex: '#D4AF37', imageIndex: 0 },
+      { name: 'Antique Gold', hex: '#B8860B', imageIndex: 0 }
     ],
     sizes: [
       { size: 'Free Size', stock: 16 }
     ],
     images: [
-      'https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?w=800&q=80'
+      'https://images.unsplash.com/photo-1762162089047-97e09435984d?w=800&q=80'
     ],
     isFeatured: true,
     rating: 4.8,
@@ -286,29 +285,29 @@ export const products = [
   },
   {
     id: 10,
-    name: '925 Silver Evil Eye Pendant Chain',
+    name: 'Traditional Kasu Mala Long Haram',
     brand: 'Divya Silver Craft',
     slug: 'silver-evil-eye-pendant-chain',
-    category: 'silver-jewellery',
-    subcategory: '925-silver-chains',
-    sellPrice: 1499,
-    mrp: 2499,
-    off: 40,
+    category: 'necklaces',
+    subcategory: 'temple-necklaces',
+    sellPrice: 2499,
+    mrp: 3999,
+    off: 38,
     tag: 'POPULAR',
-    offerTag: null,
+    offerTag: 'HERITAGE',
     stock: 19,
-    material: 'Certified 925 Sterling Silver with Mother of Pearl and blue enamel eye',
+    material: 'Temple copper alloy with 24K antique matte gold polish and embossed Lakshmi coin motifs',
     care: 'Tarnish-resistant finish. Avoid perfumes.',
-    description: 'Dainty protective talisman crafted in authentic 925 silver on an adjustable 16-18 inch delicate cable chain.',
+    description: 'A timeless South Indian Kasu Mala adorned with auspicious Goddess Lakshmi coins strung closely along a braided gold rope border.',
     colors: [
-      { name: '925 Silver', hex: '#C0C0C0', imageIndex: 0 },
-      { name: 'Rose Gold', hex: '#B76E79', imageIndex: 0 }
+      { name: 'Antique Gold', hex: '#B8860B', imageIndex: 0 },
+      { name: '22K Gold Polish', hex: '#D4AF37', imageIndex: 0 }
     ],
     sizes: [
       { size: 'Adjustable', stock: 19 }
     ],
     images: [
-      'https://images.unsplash.com/photo-1598560917505-59a3ad559071?w=800&q=80'
+      'https://images.unsplash.com/photo-1662561516992-5bf89d3aab8b?w=800&q=80'
     ],
     isFeatured: false,
     rating: 4.6,
@@ -316,7 +315,7 @@ export const products = [
   },
   {
     id: 11,
-    name: 'Classic Solitaire Mangalsutra',
+    name: 'Traditional Gold & Black Bead Mangalsutra',
     brand: 'Nizampilla Divya Jewellery',
     slug: 'classic-solitaire-mangalsutra',
     category: 'mangalsutras',
@@ -325,11 +324,11 @@ export const products = [
     mrp: 3899,
     off: 41,
     tag: 'DAILY WEAR',
-    offerTag: null,
+    offerTag: 'AUSPICIOUS',
     stock: 14,
-    material: '18K yellow gold plated brass with genuine black onyx beads and solitaire CZ centerpiece',
+    material: '18K yellow gold plated brass with authentic auspicious black beads and temple pendant',
     care: 'Safe for daily use. Keep away from harsh detergents.',
-    description: 'Contemporary short mangalsutra chain with single round solitaire pendant nestled between auspicious black beads.',
+    description: 'Authentic double-line black bead chain featuring a handcrafted traditional gold pendant with floral filigree detailing.',
     colors: [
       { name: '22K Gold Polish', hex: '#D4AF37', imageIndex: 0 }
     ],
@@ -337,7 +336,7 @@ export const products = [
       { size: '18 Inch', stock: 14 }
     ],
     images: [
-      'https://images.unsplash.com/photo-1602751584552-8ba73aad10e1?w=800&q=80'
+      'https://images.unsplash.com/photo-1673960188795-8487e65466b2?w=800&q=80'
     ],
     isFeatured: false,
     rating: 4.5,
@@ -375,7 +374,7 @@ export const products = [
   },
   {
     id: 13,
-    name: 'Floral CZ Cocktail Statement Ring',
+    name: 'Royal Meenakari Floral Cocktail Ring',
     brand: 'Nakshatra Signature',
     slug: 'floral-cz-cocktail-ring',
     category: 'rings',
@@ -384,13 +383,13 @@ export const products = [
     mrp: 2799,
     off: 43,
     tag: 'SALE',
-    offerTag: null,
+    offerTag: 'HANDCRAFTED',
     stock: 12,
-    material: 'High polish rhodium on brass with multi-shape marquise and round cut CZ crystals',
+    material: 'Brass alloy with 22K yellow gold plating, vibrant enamel Meenakari and hand-set Kundan stones',
     care: 'Wipe with a soft jewellery cloth after each wear.',
-    description: 'Grand blooming blossom cocktail ring designed to make a head-turning statement at evening galas and wedding receptions.',
+    description: 'Opulent blooming flower statement ring adorned with royal peacock blue enamel, red highlights, and sparkling Kundan center.',
     colors: [
-      { name: '925 Silver', hex: '#C0C0C0', imageIndex: 0 },
+      { name: '22K Gold Polish', hex: '#D4AF37', imageIndex: 0 },
       { name: 'Rose Gold', hex: '#B76E79', imageIndex: 0 }
     ],
     sizes: [
@@ -399,7 +398,7 @@ export const products = [
       { size: 'Size 16', stock: 3 }
     ],
     images: [
-      'https://images.unsplash.com/photo-1603561591411-07134e71a2a9?w=800&q=80'
+      'https://images.unsplash.com/photo-1770346279037-89853a3e8c60?w=800&q=80'
     ],
     isFeatured: false,
     rating: 4.6,
@@ -429,7 +428,7 @@ export const products = [
       { size: '10.5 Inch', stock: 4 }
     ],
     images: [
-      'https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?w=800&q=80'
+      'https://images.unsplash.com/photo-1778148046621-4c1aecb22146?w=800&q=80'
     ],
     isFeatured: false,
     rating: 4.8,
@@ -478,20 +477,20 @@ export const heroBanners = [
   },
   {
     id: 2,
-    kicker: '925 Sterling Silver',
-    title: 'CELESTIAL SPARKLE',
-    sub: 'Pure 92.5 silver jewellery with high-grade CZ diamonds and rhodium finish.',
-    cta: 'Shop Silver Collection',
-    ctaLink: '/plp?category=silver-jewellery',
-    img: 'https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?w=1400&q=80'
-  },
-  {
-    id: 3,
-    kicker: 'Temple Craft Edit',
+    kicker: 'Festive Saree & Temple Edit',
     title: 'TEMPLE & JHUMKAS',
     sub: 'Traditional South Indian Kemp stone jhumkas, chokers and nakshi craftsmanship.',
     cta: 'View Traditional Designs',
     ctaLink: '/plp?category=earrings',
+    img: 'https://images.unsplash.com/photo-1771654805882-95967672e6c1?w=1400&q=80'
+  },
+  {
+    id: 3,
+    kicker: 'Heritage Kundan & Matha Patti',
+    title: 'BRIDAL ADORNMENTS',
+    sub: 'Authentic handcrafted temple kadas and bridal hair jewellery.',
+    cta: 'Shop Bridal Collection',
+    ctaLink: '/plp?category=bridal',
     img: 'https://images.unsplash.com/photo-1588444837495-c6cfeb53f32d?w=1400&q=80'
   }
 ]

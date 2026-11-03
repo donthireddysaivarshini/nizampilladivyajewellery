@@ -48,3 +48,4 @@ run().catch(err => {
   console.error('Seed execution error:', err);
   process.exit(1);
 });
+
