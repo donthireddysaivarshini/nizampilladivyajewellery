@@ -792,12 +792,12 @@ function ProductForm({ form, setForm, categories, catalogColors = [], catalogSiz
       <div className="grid gap-3 md:grid-cols-3">
         <Field label="Product Category" value={form.highlights?.category || ''} onChange={v => set('highlights', { ...(form.highlights || {}), category: v })} readOnly={readOnly} />
         <Field label="Product Type" value={form.highlights?.type || ''} onChange={v => set('highlights', { ...(form.highlights || {}), type: v })} readOnly={readOnly} />
-        <Field label="Fit" value={form.highlights?.fit || ''} onChange={v => set('highlights', { ...(form.highlights || {}), fit: v })} readOnly={readOnly} />
+        <Field label="Plating / Finish" value={form.highlights?.plating || form.highlights?.fit || ''} onChange={v => set('highlights', { ...(form.highlights || {}), plating: v })} readOnly={readOnly} />
       </div>
       <div className="grid gap-3 md:grid-cols-3 mt-3">
-        <Field label="Closure" value={form.highlights?.closure || ''} onChange={v => set('highlights', { ...(form.highlights || {}), closure: v })} readOnly={readOnly} />
-        <Field label="Length" value={form.highlights?.length || ''} onChange={v => set('highlights', { ...(form.highlights || {}), length: v })} readOnly={readOnly} />
-        <Field label="Fabric" value={form.highlights?.fabric || ''} onChange={v => set('highlights', { ...(form.highlights || {}), fabric: v })} readOnly={readOnly} />
+        <Field label="Gemstone / Stones" value={form.highlights?.gemstone || form.highlights?.closure || ''} onChange={v => set('highlights', { ...(form.highlights || {}), gemstone: v })} readOnly={readOnly} />
+        <Field label="Base Metal" value={form.highlights?.metal || form.highlights?.fabric || ''} onChange={v => set('highlights', { ...(form.highlights || {}), metal: v })} readOnly={readOnly} />
+        <Field label="Occasion / Style" value={form.highlights?.occasion || form.highlights?.length || ''} onChange={v => set('highlights', { ...(form.highlights || {}), occasion: v })} readOnly={readOnly} />
       </div>
     </div>
     <div className="grid gap-3 md:grid-cols-2"><Field label="Tag" value={form.tag} onChange={v => set('tag', v)} readOnly={readOnly} /><Field label="Offer tag" value={form.offerTag} onChange={v => set('offerTag', v)} readOnly={readOnly} /></div>

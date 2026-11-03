@@ -9,11 +9,11 @@ const SWIPE_THRESHOLD = 44
 const FALLBACK_HERO = [
   {
     id: 'fallback-hero',
-    kicker: 'New Season',
-    title: 'MOVE IN STYLE',
-    cta: 'Explore Styles',
+    kicker: 'Royal Heritage',
+    title: 'TIMELESS ELEGANCE',
+    cta: 'Explore Jewellery',
     ctaLink: '/plp',
-    img: 'https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=1400&q=80'
+    img: 'https://images.unsplash.com/photo-1546804784-896d0dca3805?w=1400&q=80'
   }
 ]
 

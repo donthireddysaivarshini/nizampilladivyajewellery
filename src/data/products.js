@@ -1,47 +1,538 @@
 export const categories = [
-  { id:'men',         name:'Men',         slug:'men',         img:'https://images.unsplash.com/photo-1617137968427-85924c800a22?w=300&q=80' },
-  { id:'women',       name:'Women',       slug:'women',       img:'https://images.unsplash.com/photo-1581044777550-4cfa60707c03?w=300&q=80' },
-  { id:'dresses',     name:'Dresses',     slug:'dresses',     img:'https://images.unsplash.com/photo-1595777457583-95e059d581b8?w=300&q=80' },
-  { id:'accessories', name:'Accessories', slug:'accessories', img:'https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=300&q=80' },
-  { id:'footwear',    name:'Footwear',    slug:'footwear',    img:'https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=300&q=80' },
-  { id:'activewear',  name:'Activewear',  slug:'activewear',  img:'https://images.unsplash.com/photo-1594381898411-846e7d193883?w=300&q=80' },
-  { id:'ethnic',      name:'Ethnic',      slug:'ethnic',      img:'https://images.unsplash.com/photo-1610030469983-98e550d6193c?w=300&q=80' },
-  { id:'kids',        name:'Kids',        slug:'kids',        img:'https://images.unsplash.com/photo-1622290291468-a28f7a7dc6a8?w=300&q=80' },
+  { id: 'necklaces',        name: 'Necklaces & Chokers', slug: 'necklaces',        img: 'https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?w=400&q=80' },
+  { id: 'earrings',         name: 'Earrings & Jhumkas',  slug: 'earrings',         img: 'https://images.unsplash.com/photo-1630019852942-f89202989a59?w=400&q=80' },
+  { id: 'bangles',          name: 'Bangles & Kadas',     slug: 'bangles',          img: 'https://images.unsplash.com/photo-1611591475870-8451fef06b97?w=400&q=80' },
+  { id: 'bridal',           name: 'Bridal Collection',   slug: 'bridal',           img: 'https://images.unsplash.com/photo-1546804784-896d0dca3805?w=400&q=80' },
+  { id: 'silver-jewellery', name: 'Silver Jewellery',    slug: 'silver-jewellery', img: 'https://images.unsplash.com/photo-1605100804763-247f67b3557e?w=400&q=80' },
+  { id: 'rings',            name: 'Rings',               slug: 'rings',            img: 'https://images.unsplash.com/photo-1603561591411-07134e71a2a9?w=400&q=80' },
+  { id: 'mangalsutras',     name: 'Mangalsutras',        slug: 'mangalsutras',     img: 'https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?w=400&q=80' },
+  { id: 'anklets',          name: 'Anklets & Payal',     slug: 'anklets',          img: 'https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?w=400&q=80' },
 ]
+
 export const products = [
-  { id:1,name:'Oversized Graphic Tee',brand:"Levi's",slug:'oversized-graphic-tee',category:'men',subcategory:'t-shirts',sellPrice:1299,mrp:2199,off:41,tag:'SALE',offerTag:'BUY 2 @1399',stock:8,material:'100% Combed Cotton 220 GSM',care:'Machine wash cold. Do not bleach.',description:'A relaxed fit graphic tee in premium combed cotton. Bold screen print inspired by urban street culture. Dropped shoulders and boxy silhouette — effortlessly cool.',colors:[{name:'Black',hex:'#1a1a1a',imageIndex:0},{name:'White',hex:'#f5f5f5',imageIndex:1},{name:'Navy',hex:'#1e3a5f',imageIndex:2}],sizes:[{size:'XS',stock:3},{size:'S',stock:5},{size:'M',stock:8},{size:'L',stock:2},{size:'XL',stock:0}],images:['https://images.unsplash.com/photo-1503341504253-dff4815485f1?w=800&q=80','https://images.unsplash.com/photo-1576566588028-4147f3842f27?w=800&q=80','https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=800&q=80'],isFeatured:true,rating:4.4,reviews:128},
-  { id:2,name:'High Waist Wide Leg Jeans',brand:'Zara',slug:'high-waist-wide-leg-jeans',category:'women',subcategory:'jeans',sellPrice:2499,mrp:3999,off:37,tag:'NEW',offerTag:'BUY 2 @1399',stock:3,material:'98% Cotton 2% Elastane',care:'Machine wash cold.',description:'High waist wide leg jeans with a flattering silhouette. The relaxed fit through hip and thigh creates an effortless elongating look.',colors:[{name:'Indigo',hex:'#1a1a2e',imageIndex:0},{name:'Tan',hex:'#8B7355',imageIndex:1},{name:'Black',hex:'#111',imageIndex:1}],sizes:[{size:'XS',stock:0},{size:'S',stock:3},{size:'M',stock:5},{size:'L',stock:2}],images:['https://images.unsplash.com/photo-1541099649105-f69ad21f3246?w=800&q=80','https://images.unsplash.com/photo-1473966968600-fa801b869a1a?w=800&q=80'],isFeatured:true,rating:4.6,reviews:84},
-  { id:3,name:'Floral Midi Dress',brand:'Mango',slug:'floral-midi-dress',category:'dresses',subcategory:'midi-dresses',sellPrice:3199,mrp:5499,off:41,tag:'',stock:15,material:'100% Viscose',care:'Hand wash cold.',description:'A feminine floral midi dress with wrap-style bodice and flowy skirt that hits below the knee. Perfect for garden parties or brunches.',colors:[{name:'Pink',hex:'#f8b4d9'},{name:'Yellow',hex:'#fde68a'},{name:'Mint',hex:'#a7f3d0'}],sizes:[{size:'XS',stock:4},{size:'S',stock:5},{size:'M',stock:3},{size:'L',stock:2},{size:'XL',stock:1}],images:['https://images.unsplash.com/photo-1572804013309-59a88b7e92f1?w=800&q=80'],isFeatured:true,rating:4.3,reviews:56},
-  { id:4,name:'Slim Fit Chinos',brand:'H&M',slug:'slim-fit-chinos',category:'men',subcategory:'trousers',sellPrice:999,mrp:1799,off:44,tag:'SALE',stock:0,material:'98% Cotton 2% Elastane',care:'Machine wash 40C.',description:'Slim fit chinos in soft stretch cotton twill. Five-pocket styling with button and zip fastening.',colors:[{name:'Khaki',hex:'#c4a882'},{name:'Navy',hex:'#334155'},{name:'Black',hex:'#1a1a1a'}],sizes:[{size:'28',stock:0},{size:'30',stock:0},{size:'32',stock:0},{size:'34',stock:0}],images:['https://images.unsplash.com/photo-1473966968600-fa801b869a1a?w=800&q=80'],isFeatured:false,rating:4.1,reviews:200},
-  { id:5,name:'Structured Blazer',brand:'Only',slug:'structured-blazer',category:'women',subcategory:'blazers',sellPrice:4499,mrp:7999,off:43,tag:'NEW',stock:5,material:'60% Polyester 40% Viscose Lined',care:'Dry clean only.',description:'Tailored structured blazer with single-breasted button front. Defined shoulders and slim cut create a powerful silhouette.',colors:[{name:'Black',hex:'#1a1a1a',imageIndex:0},{name:'Grey',hex:'#6b7280',imageIndex:1},{name:'Maroon',hex:'#9b2335',imageIndex:1}],sizes:[{size:'XS',stock:1},{size:'S',stock:2},{size:'M',stock:1},{size:'L',stock:1}],images:['https://images.unsplash.com/photo-1591047139829-d91aecb6caea?w=800&q=80','https://images.unsplash.com/photo-1490481651871-ab68de25d43d?w=800&q=80'],isFeatured:true,rating:4.7,reviews:43},
-  { id:6,name:'Ribbed Knit Sweater',brand:'Vero Moda',slug:'ribbed-knit-sweater',category:'women',subcategory:'sweaters',sellPrice:1799,mrp:2999,off:40,tag:'',stock:12,material:'50% Cotton 50% Acrylic',care:'Hand wash cold.',description:'Cosy ribbed knit sweater with relaxed fit. Soft yarn blend keeps you warm without bulk.',colors:[{name:'Cream',hex:'#f5f0eb'},{name:'Caramel',hex:'#d4a373'},{name:'Espresso',hex:'#6b4c3b'}],sizes:[{size:'XS',stock:3},{size:'S',stock:4},{size:'M',stock:3},{size:'L',stock:2}],images:['https://images.unsplash.com/photo-1576871337632-b9aef4c17ab9?w=800&q=80'],isFeatured:false,rating:4.5,reviews:91},
-  { id:7,name:'Wrap Midi Skirt',brand:'Zara',slug:'wrap-midi-skirt',category:'women',subcategory:'skirts',sellPrice:2199,mrp:3499,off:37,tag:'',stock:7,material:'100% Polyester Satin finish',care:'Machine wash 30C.',description:'Flowing wrap midi skirt in silky satin. Adjustable tie waist creates a flattering silhouette.',colors:[{name:'Black',hex:'#1a1a1a'},{name:'Purple',hex:'#7c3aed'},{name:'Red',hex:'#dc2626'}],sizes:[{size:'XS',stock:2},{size:'S',stock:2},{size:'M',stock:2},{size:'L',stock:1}],images:['https://images.unsplash.com/photo-1583496661160-fb5886a0aaaa?w=800&q=80'],isFeatured:false,rating:4.2,reviews:38},
-  { id:8,name:'Cargo Jogger Pants',brand:"Levi's",slug:'cargo-jogger-pants',category:'men',subcategory:'joggers',sellPrice:1599,mrp:2699,off:40,tag:'NEW',stock:20,material:'100% Cotton French Terry',care:'Machine wash cold.',description:'Relaxed cargo joggers with adjustable drawstring waist, multiple pockets and tapered ankle cuffs.',colors:[{name:'Black',hex:'#1a1a1a'},{name:'Olive',hex:'#4a5240'},{name:'Walnut',hex:'#7c6545'}],sizes:[{size:'S',stock:5},{size:'M',stock:6},{size:'L',stock:5},{size:'XL',stock:3},{size:'XXL',stock:1}],images:['https://images.unsplash.com/photo-1506629082955-511b1aa562c8?w=800&q=80'],isFeatured:true,rating:4.4,reviews:167},
-  { id:9,name:'Linen Co-ord Set',brand:'Mango',slug:'linen-coord-set',category:'women',subcategory:'co-ords',sellPrice:3799,mrp:5999,off:36,tag:'',stock:4,material:'100% Linen',care:'Machine wash 30C. Iron damp.',description:'Breezy linen co-ord set comprising a relaxed blazer and wide-leg trousers.',colors:[{name:'Sand',hex:'#f5f0e8'},{name:'Taupe',hex:'#c4b5a5'},{name:'Driftwood',hex:'#8b7d6b'}],sizes:[{size:'XS',stock:1},{size:'S',stock:1},{size:'M',stock:1},{size:'L',stock:1}],images:['https://images.unsplash.com/photo-1559181567-c3190ca9959b?w=800&q=80'],isFeatured:false,rating:4.6,reviews:29},
-  { id:10,name:'Cropped Leather Jacket',brand:'Only',slug:'cropped-leather-jacket',category:'women',subcategory:'jackets',sellPrice:5999,mrp:9999,off:40,tag:'NEW',stock:6,material:'Faux leather Polyester lining',care:'Wipe with damp cloth.',description:'Edgy cropped faux leather jacket with zip-front closure, side pockets and band collar.',colors:[{name:'Black',hex:'#1a1a1a'},{name:'Tan',hex:'#8B4513'}],sizes:[{size:'XS',stock:1},{size:'S',stock:2},{size:'M',stock:2},{size:'L',stock:1}],images:['https://images.unsplash.com/photo-1551028719-00167b16eac5?w=800&q=80'],isFeatured:true,rating:4.8,reviews:72},
-  { id:11,name:'Printed Maxi Dress',brand:'H&M',slug:'printed-maxi-dress',category:'dresses',subcategory:'maxi-dresses',sellPrice:2799,mrp:4499,off:37,tag:'',stock:9,material:'100% Viscose soft drape',care:'Machine wash 30C.',description:'Flowy printed maxi dress with V-neckline, adjustable spaghetti straps and tiered skirt.',colors:[{name:'Amber',hex:'#fbbf24'},{name:'Blue',hex:'#3b82f6'},{name:'Emerald',hex:'#10b981'}],sizes:[{size:'XS',stock:2},{size:'S',stock:2},{size:'M',stock:2},{size:'L',stock:2},{size:'XL',stock:1}],images:['https://images.unsplash.com/photo-1496747611176-843222e1e57c?w=800&q=80'],isFeatured:false,rating:4.3,reviews:54},
-  { id:12,name:'V-Neck Knit Top',brand:'Vero Moda',slug:'v-neck-knit-top',category:'women',subcategory:'tops',sellPrice:899,mrp:1599,off:43,tag:'SALE',stock:0,material:'80% Viscose 20% Nylon',care:'Hand wash cold.',description:'Softly structured V-neck knit top with subtle rib texture. Lightweight and breathable.',colors:[{name:'White',hex:'#ffffff'},{name:'Yellow',hex:'#fde68a'},{name:'Blush',hex:'#fca5a5'}],sizes:[{size:'XS',stock:0},{size:'S',stock:0},{size:'M',stock:0},{size:'L',stock:0}],images:['https://images.unsplash.com/photo-1564859228273-274232fdb516?w=800&q=80'],isFeatured:false,rating:4.0,reviews:112},
+  {
+    id: 1,
+    name: 'Royal Kundan & Pearl Choker Set',
+    brand: 'Nizampilla Divya Jewellery',
+    slug: 'kundan-pearl-choker-set',
+    category: 'necklaces',
+    subcategory: 'kundan-sets',
+    sellPrice: 4499,
+    mrp: 7999,
+    off: 44,
+    tag: 'BESTSELLER',
+    offerTag: 'BRIDAL EDIT',
+    stock: 12,
+    material: 'Brass alloy with 24K Micro Gold Plating & Hand-cut Kundan stones with natural freshwater pearls',
+    care: 'Keep away from water, perfume, and harsh chemicals. Store in airtight zip pouch after use.',
+    description: 'An opulent handcrafted choker necklace adorned with radiant Kundan stones, emerald green accents, and cascading pearl drops. Paired with matching statement earrings and a maang tikka.',
+    colors: [
+      { name: 'Kundan Green', hex: '#2E8B57', imageIndex: 0 },
+      { name: 'Ruby Red', hex: '#9B111E', imageIndex: 0 }
+    ],
+    sizes: [
+      { size: 'Free Size', stock: 12 }
+    ],
+    images: [
+      'https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?w=800&q=80',
+      'https://images.unsplash.com/photo-1535632787350-4e68ef0ac584?w=800&q=80'
+    ],
+    isFeatured: true,
+    rating: 4.8,
+    reviews: 142
+  },
+  {
+    id: 2,
+    name: 'Antique Lakshmi Temple Necklace',
+    brand: 'Royal Heritage',
+    slug: 'antique-lakshmi-temple-necklace',
+    category: 'necklaces',
+    subcategory: 'temple-necklaces',
+    sellPrice: 5899,
+    mrp: 9999,
+    off: 41,
+    tag: 'NEW',
+    offerTag: 'TEMPLE CRAFT',
+    stock: 8,
+    material: 'Temple Brass alloy with antique matte gold finish and genuine red Kemp stones',
+    care: 'Wipe gently with dry soft cloth. Avoid direct contact with moisture.',
+    description: 'Sacred Goddess Lakshmi motifs intricately carved in Nakshi style, bordered by Kemp cabochon stones and cluster bell drops. Complete with matching heritage jhumkas.',
+    colors: [
+      { name: 'Antique Gold', hex: '#B8860B', imageIndex: 0 }
+    ],
+    sizes: [
+      { size: 'Adjustable Dori', stock: 8 }
+    ],
+    images: [
+      'https://images.unsplash.com/photo-1611591475870-8451fef06b97?w=800&q=80',
+      'https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?w=800&q=80'
+    ],
+    isFeatured: true,
+    rating: 4.9,
+    reviews: 86
+  },
+  {
+    id: 3,
+    name: '925 Pure Silver Solitaire Ring',
+    brand: 'Divya Silver Craft',
+    slug: '925-pure-silver-solitaire-ring',
+    category: 'rings',
+    subcategory: 'solitaire-rings',
+    sellPrice: 1899,
+    mrp: 3299,
+    off: 42,
+    tag: 'BESTSELLER',
+    offerTag: '925 SILVER',
+    stock: 15,
+    material: 'Hallmarked 92.5% Sterling Silver with Triple Rhodium Polish and 2-carat Hearts & Arrows CZ Solitaire',
+    care: 'Comes with anti-tarnish coating. Clean with silver polishing cloth.',
+    description: 'A breathtaking 2-carat brilliant cut CZ diamond set on a polished 925 sterling silver band with accent pavé stones. Perfect for proposals, anniversaries, and daily glamour.',
+    colors: [
+      { name: '925 Silver', hex: '#C0C0C0', imageIndex: 0 },
+      { name: 'Rose Gold', hex: '#B76E79', imageIndex: 0 }
+    ],
+    sizes: [
+      { size: 'Size 12', stock: 4 },
+      { size: 'Size 14', stock: 5 },
+      { size: 'Size 16', stock: 4 },
+      { size: 'Adjustable', stock: 2 }
+    ],
+    images: [
+      'https://images.unsplash.com/photo-1605100804763-247f67b3557e?w=800&q=80',
+      'https://images.unsplash.com/photo-1603561591411-07134e71a2a9?w=800&q=80'
+    ],
+    isFeatured: true,
+    rating: 4.7,
+    reviews: 118
+  },
+  {
+    id: 4,
+    name: 'Peacock Kemp Grand Jhumkas',
+    brand: 'Nizampilla Divya Jewellery',
+    slug: 'peacock-kemp-grand-jhumkas',
+    category: 'earrings',
+    subcategory: 'jhumkas',
+    sellPrice: 2499,
+    mrp: 4199,
+    off: 40,
+    tag: 'NEW',
+    offerTag: 'FESTIVE',
+    stock: 14,
+    material: 'Brass with 22K matte gold plating, Kemp red stones, and dangling seed pearls',
+    care: 'Handle with care. Avoid perfumes and moisture.',
+    description: 'Majestic twin peacocks sculpted above two-tier ornate bell domes with fine filigree work and delicate pearl hangings.',
+    colors: [
+      { name: 'Ruby Red & Emerald', hex: '#9B111E', imageIndex: 0 },
+      { name: '22K Gold Polish', hex: '#D4AF37', imageIndex: 0 }
+    ],
+    sizes: [
+      { size: 'Free Size', stock: 14 }
+    ],
+    images: [
+      'https://images.unsplash.com/photo-1630019852942-f89202989a59?w=800&q=80',
+      'https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?w=800&q=80'
+    ],
+    isFeatured: true,
+    rating: 4.6,
+    reviews: 94
+  },
+  {
+    id: 5,
+    name: 'American Diamond CZ Bridal Set',
+    brand: 'Nakshatra Signature',
+    slug: 'american-diamond-cz-bridal-set',
+    category: 'bridal',
+    subcategory: 'bridal-sets',
+    sellPrice: 8999,
+    mrp: 14999,
+    off: 40,
+    tag: 'LUXURY',
+    offerTag: 'BRIDAL FAVOURITE',
+    stock: 6,
+    material: 'High-grade AAA Swiss Zirconia with two-tone Platinum and Rose Gold rhodium plating',
+    care: 'Store individually in velvet box provided.',
+    description: 'Stunning collar necklace encrusted with brilliant-cut pear and marquise CZ diamonds that glisten like natural diamonds, complete with chandelier drop earrings.',
+    colors: [
+      { name: 'Rose Gold', hex: '#B76E79', imageIndex: 0 },
+      { name: '925 Silver', hex: '#C0C0C0', imageIndex: 0 }
+    ],
+    sizes: [
+      { size: 'Free Size', stock: 6 }
+    ],
+    images: [
+      'https://images.unsplash.com/photo-1546804784-896d0dca3805?w=800&q=80',
+      'https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?w=800&q=80'
+    ],
+    isFeatured: true,
+    rating: 4.9,
+    reviews: 64
+  },
+  {
+    id: 6,
+    name: 'Traditional Gold Plated Temple Kadas',
+    brand: 'Royal Heritage',
+    slug: 'traditional-gold-temple-kadas',
+    category: 'bangles',
+    subcategory: 'antique-kadas',
+    sellPrice: 3299,
+    mrp: 5499,
+    off: 40,
+    tag: 'SALE',
+    offerTag: 'PAIR OF 2',
+    stock: 18,
+    material: 'Copper-brass base with 1 gram micro gold plating and side screw opening',
+    care: 'Wipe with a clean dry cotton cloth. Do not soak in water.',
+    description: 'Heavy royal kadas featuring relief carvings of floral vines and elephant motifs with secure screw closure.',
+    colors: [
+      { name: '22K Gold Polish', hex: '#D4AF37', imageIndex: 0 },
+      { name: 'Antique Gold', hex: '#B8860B', imageIndex: 0 }
+    ],
+    sizes: [
+      { size: '2.4', stock: 6 },
+      { size: '2.6', stock: 8 },
+      { size: '2.8', stock: 4 }
+    ],
+    images: [
+      'https://images.unsplash.com/photo-1611591475870-8451fef06b97?w=800&q=80'
+    ],
+    isFeatured: true,
+    rating: 4.5,
+    reviews: 78
+  },
+  {
+    id: 7,
+    name: 'Oxidised Silver Tribal Hasli Necklace',
+    brand: 'Divya Silver Craft',
+    slug: 'oxidised-silver-tribal-hasli',
+    category: 'silver-jewellery',
+    subcategory: 'oxidised-necklaces',
+    sellPrice: 1699,
+    mrp: 2899,
+    off: 41,
+    tag: 'TRENDING',
+    offerTag: null,
+    stock: 11,
+    material: 'German silver alloy with antique black oxidised polish',
+    care: 'Keep dry. Polish with cotton to maintain vintage patina.',
+    description: 'Bohemian rigid collar hasli necklace adorned with ghungroo bells and geometric mirror medallions.',
+    colors: [
+      { name: 'Oxidised Silver', hex: '#4A4A4A', imageIndex: 0 }
+    ],
+    sizes: [
+      { size: 'Adjustable Dori', stock: 11 }
+    ],
+    images: [
+      'https://images.unsplash.com/photo-1605100804763-247f67b3557e?w=800&q=80'
+    ],
+    isFeatured: false,
+    rating: 4.4,
+    reviews: 52
+  },
+  {
+    id: 8,
+    name: 'Cubic Zirconia Tennis Bracelet',
+    brand: 'Nakshatra Signature',
+    slug: 'cz-tennis-bracelet',
+    category: 'bangles',
+    subcategory: 'cz-bangles',
+    sellPrice: 2199,
+    mrp: 3799,
+    off: 42,
+    tag: 'BESTSELLER',
+    offerTag: null,
+    stock: 16,
+    material: 'Pure brass with premium white gold rhodium plating and prong-set 4mm round brilliant CZ crystals',
+    care: 'Remove before bathing or swimming.',
+    description: 'Timeless tennis bracelet featuring a continuous line of individually hand-set sparkling stones with double safety clasp.',
+    colors: [
+      { name: '925 Silver', hex: '#C0C0C0', imageIndex: 0 },
+      { name: 'Rose Gold', hex: '#B76E79', imageIndex: 0 },
+      { name: '22K Gold Polish', hex: '#D4AF37', imageIndex: 0 }
+    ],
+    sizes: [
+      { size: 'Free Size', stock: 16 }
+    ],
+    images: [
+      'https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?w=800&q=80'
+    ],
+    isFeatured: true,
+    rating: 4.8,
+    reviews: 135
+  },
+  {
+    id: 9,
+    name: 'Polki & Emerald Chandbali Earrings',
+    brand: 'Nizampilla Divya Jewellery',
+    slug: 'polki-emerald-chandbali-earrings',
+    category: 'earrings',
+    subcategory: 'chandbalis',
+    sellPrice: 2799,
+    mrp: 4699,
+    off: 40,
+    tag: 'NEW',
+    offerTag: 'ROYAL EDIT',
+    stock: 10,
+    material: 'Gold polished alloy with uncut open-setting Polki stones, green hydro beads and pearl fringe',
+    care: 'Store flat in the provided jewellery box.',
+    description: 'Crescent moon chandbali earrings handcrafted with uncut Polki stones, faux Colombian emerald stones, and delicate pearl tassels.',
+    colors: [
+      { name: 'Kundan Green', hex: '#2E8B57', imageIndex: 0 },
+      { name: 'Ruby Red', hex: '#9B111E', imageIndex: 0 }
+    ],
+    sizes: [
+      { size: 'Free Size', stock: 10 }
+    ],
+    images: [
+      'https://images.unsplash.com/photo-1630019852942-f89202989a59?w=800&q=80'
+    ],
+    isFeatured: true,
+    rating: 4.7,
+    reviews: 67
+  },
+  {
+    id: 10,
+    name: '925 Silver Evil Eye Pendant Chain',
+    brand: 'Divya Silver Craft',
+    slug: 'silver-evil-eye-pendant-chain',
+    category: 'silver-jewellery',
+    subcategory: '925-silver-chains',
+    sellPrice: 1499,
+    mrp: 2499,
+    off: 40,
+    tag: 'POPULAR',
+    offerTag: null,
+    stock: 19,
+    material: 'Certified 925 Sterling Silver with Mother of Pearl and blue enamel eye',
+    care: 'Tarnish-resistant finish. Avoid perfumes.',
+    description: 'Dainty protective talisman crafted in authentic 925 silver on an adjustable 16-18 inch delicate cable chain.',
+    colors: [
+      { name: '925 Silver', hex: '#C0C0C0', imageIndex: 0 },
+      { name: 'Rose Gold', hex: '#B76E79', imageIndex: 0 }
+    ],
+    sizes: [
+      { size: 'Adjustable', stock: 19 }
+    ],
+    images: [
+      'https://images.unsplash.com/photo-1598560917505-59a3ad559071?w=800&q=80'
+    ],
+    isFeatured: false,
+    rating: 4.6,
+    reviews: 91
+  },
+  {
+    id: 11,
+    name: 'Classic Solitaire Mangalsutra',
+    brand: 'Nizampilla Divya Jewellery',
+    slug: 'classic-solitaire-mangalsutra',
+    category: 'mangalsutras',
+    subcategory: 'short-mangalsutra',
+    sellPrice: 2299,
+    mrp: 3899,
+    off: 41,
+    tag: 'DAILY WEAR',
+    offerTag: null,
+    stock: 14,
+    material: '18K yellow gold plated brass with genuine black onyx beads and solitaire CZ centerpiece',
+    care: 'Safe for daily use. Keep away from harsh detergents.',
+    description: 'Contemporary short mangalsutra chain with single round solitaire pendant nestled between auspicious black beads.',
+    colors: [
+      { name: '22K Gold Polish', hex: '#D4AF37', imageIndex: 0 }
+    ],
+    sizes: [
+      { size: '18 Inch', stock: 14 }
+    ],
+    images: [
+      'https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?w=800&q=80'
+    ],
+    isFeatured: false,
+    rating: 4.5,
+    reviews: 48
+  },
+  {
+    id: 12,
+    name: 'Bridal Kundan Matha Patti & Tikka',
+    brand: 'Nizampilla Divya Jewellery',
+    slug: 'bridal-kundan-matha-patti',
+    category: 'bridal',
+    subcategory: 'matha-patti',
+    sellPrice: 3499,
+    mrp: 5999,
+    off: 42,
+    tag: 'BRIDAL',
+    offerTag: 'HANDMADE',
+    stock: 7,
+    material: '24K Gold Polish with Meenakari back-detailing and Kundan stone multi-strand hair chains',
+    care: 'Handle gently. Secure with bobby pins provided.',
+    description: 'Majestic multi-layered bridal headpiece that frames the forehead with luminous pearl strands and floral Kundan medallions.',
+    colors: [
+      { name: 'Pearl White', hex: '#F8F6F0', imageIndex: 0 },
+      { name: 'Ruby Red & Emerald', hex: '#9B111E', imageIndex: 0 }
+    ],
+    sizes: [
+      { size: 'Free Size', stock: 7 }
+    ],
+    images: [
+      'https://images.unsplash.com/photo-1546804784-896d0dca3805?w=800&q=80'
+    ],
+    isFeatured: true,
+    rating: 4.9,
+    reviews: 39
+  },
+  {
+    id: 13,
+    name: 'Floral CZ Cocktail Statement Ring',
+    brand: 'Nakshatra Signature',
+    slug: 'floral-cz-cocktail-ring',
+    category: 'rings',
+    subcategory: 'cocktail-rings',
+    sellPrice: 1599,
+    mrp: 2799,
+    off: 43,
+    tag: 'SALE',
+    offerTag: null,
+    stock: 12,
+    material: 'High polish rhodium on brass with multi-shape marquise and round cut CZ crystals',
+    care: 'Wipe with a soft jewellery cloth after each wear.',
+    description: 'Grand blooming blossom cocktail ring designed to make a head-turning statement at evening galas and wedding receptions.',
+    colors: [
+      { name: '925 Silver', hex: '#C0C0C0', imageIndex: 0 },
+      { name: 'Rose Gold', hex: '#B76E79', imageIndex: 0 }
+    ],
+    sizes: [
+      { size: 'Adjustable', stock: 6 },
+      { size: 'Size 14', stock: 3 },
+      { size: 'Size 16', stock: 3 }
+    ],
+    images: [
+      'https://images.unsplash.com/photo-1603561591411-07134e71a2a9?w=800&q=80'
+    ],
+    isFeatured: false,
+    rating: 4.6,
+    reviews: 62
+  },
+  {
+    id: 14,
+    name: 'Sterling Silver Ghungroo Payal Anklets',
+    brand: 'Divya Silver Craft',
+    slug: 'silver-ghungroo-payal-anklets',
+    category: 'anklets',
+    subcategory: 'payal-anklets',
+    sellPrice: 2999,
+    mrp: 4999,
+    off: 40,
+    tag: 'NEW',
+    offerTag: 'PAIR OF 2',
+    stock: 9,
+    material: '92.5% Purity Sterling Silver with musical silver bells and strong S-hook clasp',
+    care: 'Clean with mild soapy water or silver dip. Dry completely.',
+    description: 'Pure silver pair of payal anklets with sweet chime bells that ring softly with every step.',
+    colors: [
+      { name: '925 Silver', hex: '#C0C0C0', imageIndex: 0 }
+    ],
+    sizes: [
+      { size: '10 Inch', stock: 5 },
+      { size: '10.5 Inch', stock: 4 }
+    ],
+    images: [
+      'https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?w=800&q=80'
+    ],
+    isFeatured: false,
+    rating: 4.8,
+    reviews: 44
+  },
+  {
+    id: 15,
+    name: 'Emerald Green Hydro Bead Layered Mala',
+    brand: 'Nizampilla Divya Jewellery',
+    slug: 'emerald-hydro-bead-layered-mala',
+    category: 'necklaces',
+    subcategory: 'temple-necklaces',
+    sellPrice: 3199,
+    mrp: 5499,
+    off: 42,
+    tag: 'ROYAL EDIT',
+    offerTag: null,
+    stock: 10,
+    material: 'Faceted green hydro beads with antique gold carved spacer beads and temple brooch pendant',
+    care: 'Do not pull abruptly. Store hanging or flat.',
+    description: 'Grand 5-layer cascading necklace crafted with royal emerald green crystal beads, accented with antique gold polish temple spacers.',
+    colors: [
+      { name: 'Kundan Green', hex: '#2E8B57', imageIndex: 0 }
+    ],
+    sizes: [
+      { size: 'Adjustable Dori', stock: 10 }
+    ],
+    images: [
+      'https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?w=800&q=80'
+    ],
+    isFeatured: true,
+    rating: 4.8,
+    reviews: 58
+  }
 ]
+
 export const heroBanners = [
-  { id:1,kicker:'Summer Collection 2026',title:'FRESH DROPS',sub:'Discover bold styles made for those who move fast.',cta:'Shop New Arrivals',ctaLink:'/plp?tag=NEW',img:'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=1400&q=80' },
-  { id:5,kicker:'Featured Edit',title:'MOVE IN STYLE',sub:'Refined styles for campaign drops.',cta:'Explore Styles',ctaLink:'/plp',img:'https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=1400&q=80' },
-  { id:2,kicker:"Women's Edit",title:'POWER DRESSING',sub:'Bold silhouettes. Refined details. Fashion that speaks.',cta:"Shop Women's",ctaLink:'/plp?category=women',img:'https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=1400&q=80' },
-  { id:3,kicker:"Men's Essentials",title:'STREET READY',sub:'Clean fits, sharp layers, everyday confidence.',cta:'Shop Men',ctaLink:'/plp?category=men',img:'https://images.unsplash.com/photo-1516257984-b1b4d707412e?w=1400&q=80' },
-  { id:4,kicker:'End of Season Sale',title:'UP TO 50% OFF',sub:'Premium styles at unbeatable prices. Limited stock.',cta:'Shop the Sale',ctaLink:'/plp?tag=SALE',img:'https://images.unsplash.com/photo-1469334031218-e382a71b716b?w=1400&q=80' },
+  {
+    id: 1,
+    kicker: 'Bridal & Festive 2026',
+    title: 'ROYAL HERITAGE',
+    sub: 'Handcrafted 22K gold polish & authentic Kundan bridal sets made to captivate.',
+    cta: 'Explore Bridal Sets',
+    ctaLink: '/plp?category=bridal',
+    img: 'https://images.unsplash.com/photo-1546804784-896d0dca3805?w=1400&q=80'
+  },
+  {
+    id: 2,
+    kicker: '925 Sterling Silver',
+    title: 'CELESTIAL SPARKLE',
+    sub: 'Pure 92.5 silver jewellery with high-grade CZ diamonds and rhodium finish.',
+    cta: 'Shop Silver Collection',
+    ctaLink: '/plp?category=silver-jewellery',
+    img: 'https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?w=1400&q=80'
+  },
+  {
+    id: 3,
+    kicker: 'Temple Craft Edit',
+    title: 'TEMPLE & JHUMKAS',
+    sub: 'Traditional South Indian Kemp stone jhumkas, chokers and nakshi craftsmanship.',
+    cta: 'View Traditional Designs',
+    ctaLink: '/plp?category=earrings',
+    img: 'https://images.unsplash.com/photo-1630019852942-f89202989a59?w=1400&q=80'
+  }
 ]
+
 export const dummyOrders = [
-  { id:'ORD-2026-00042',date:'07 May 2026',items:2,total:3598,status:'paid',trackingLink:null,products:[{productId:1,qty:1,size:'M',color:'#1a1a1a',unitPrice:1299},{productId:3,qty:1,size:'S',color:'#f8b4d9',unitPrice:3199}] },
-  { id:'ORD-2026-00031',date:'28 Apr 2026',items:1,total:4499,status:'shipped',trackingLink:'https://www.shiprocket.in/tracking',products:[{productId:5,qty:1,size:'M',color:'#1a1a1a',unitPrice:4499}] },
-  { id:'ORD-2026-00019',date:'15 Apr 2026',items:3,total:6297,status:'delivered',trackingLink:'https://www.shiprocket.in/tracking',products:[{productId:1,qty:1,size:'L',color:'#1a1a1a',unitPrice:1299},{productId:6,qty:1,size:'M',color:'#f5f0eb',unitPrice:1799},{productId:8,qty:2,size:'XL',color:'#4a5240',unitPrice:1599}] },
-  { id:'ORD-2026-00008',date:'02 Apr 2026',items:1,total:2499,status:'delivered',trackingLink:'https://www.shiprocket.in/tracking',products:[{productId:2,qty:1,size:'M',color:'#1a1a2e',unitPrice:2499}] },
-  { id:'ORD-2026-00003',date:'22 Mar 2026',items:1,total:999,status:'cancelled',trackingLink:null,products:[{productId:4,qty:1,size:'32',color:'#c4a882',unitPrice:999}] },
+  {
+    id: 'ORD-2026-00042',
+    date: '07 May 2026',
+    items: 2,
+    total: 6398,
+    status: 'paid',
+    trackingLink: null,
+    products: [
+      { productId: 1, qty: 1, size: 'Free Size', color: '#2E8B57', unitPrice: 4499 },
+      { productId: 3, qty: 1, size: 'Size 14', color: '#C0C0C0', unitPrice: 1899 }
+    ]
+  }
 ]
+
 export const dummyAddresses = [
-  { id:1,label:'Home',fullName:'Rahul Sharma',phone:'+91 98765 43210',addressLine1:'42, Poes Garden, Alwarpet',addressLine2:'Near Greenways Road',city:'Chennai',state:'Tamil Nadu',pincode:'600086',isDefault:true },
-  { id:2,label:'Office',fullName:'Rahul Sharma',phone:'+91 98765 43210',addressLine1:'Level 5, RMZ Millennia',addressLine2:'Perungudi IT Park',city:'Chennai',state:'Tamil Nadu',pincode:'600096',isDefault:false },
+  {
+    id: 1,
+    label: 'Home',
+    fullName: 'Rahul Sharma',
+    phone: '+91 98765 43210',
+    addressLine1: '42, Poes Garden, Alwarpet',
+    addressLine2: 'Near Greenways Road',
+    city: 'Chennai',
+    state: 'Tamil Nadu',
+    pincode: '600086',
+    isDefault: true
+  }
 ]
+
 export const promoCodes = {
-  FIRST10:  { type:'percentage',value:10, minCart:0,    desc:'10% off your first order' },
-  FREESHIP: { type:'shipping',  value:0,  minCart:0,    desc:'Free shipping applied!' },
-  SAVE500:  { type:'fixed',     value:500,minCart:2000, desc:'500 off on orders above 2000' },
+  FIRST10:  { type: 'percentage', value: 10, minCart: 0,    desc: '10% off your first order' },
+  FREESHIP: { type: 'shipping',   value: 0,  minCart: 0,    desc: 'Free shipping applied!' },
+  SAVE500:  { type: 'fixed',      value: 500, minCart: 2000, desc: '₹500 off on orders above ₹2000' }
 }

@@ -5,15 +5,17 @@ INSERT INTO role_permissions(role_id, permission_id)
 SELECT r.id, p.id FROM roles r, permissions p WHERE r.name='customer' AND p.name='view_catalog'
 ON CONFLICT (role_id, permission_id) DO NOTHING;
 
+-- Admin: admin@gmail.com / 123123123
 INSERT INTO users(role_id, name, email, phone, password_hash)
-SELECT id, 'StaffArc Admin', 'admin@gmail.com', null, '$2b$12$2fmLGFCY0zmSotZuCCOTieOzc0nF1AwxQt9/TAcrhRqJUtdip4Qhi'
+SELECT id, 'Divya Admin', 'admin@gmail.com', '+91 99483 42710', '$2a$12$0TbT5iMZE.KBTlVFLiCjmevl1mxKZZngd7/S7YAEYdLVLueNMcEqu'
 FROM roles WHERE name='admin'
 ON CONFLICT (email) DO UPDATE SET role_id=EXCLUDED.role_id, password_hash=EXCLUDED.password_hash, is_active=true, status='active', updated_at=now();
 
+-- Customer: rahul@example.com / password123
 INSERT INTO users(role_id, name, email, phone, password_hash)
-SELECT id, 'Rahul Sharma', 'rahul@example.com', '+91 98765 43210', '$2b$12$2kzY7kG0HdK6Y5oVxo6pK.VecmiGGFnlCHYr/dSu3zfVJ/a9eCp66'
+SELECT id, 'Rahul Sharma', 'rahul@example.com', '+91 98765 43210', '$2a$10$wN1bVp896sV5V5a6JmQpgeV2U/5iE6k3yPGBJ3h9wR8QvG5tB4SVO'
 FROM roles WHERE name='customer'
-ON CONFLICT (email) DO NOTHING;
+ON CONFLICT (email) DO UPDATE SET password_hash=EXCLUDED.password_hash, is_active=true, status='active', updated_at=now();
 
 INSERT INTO user_addresses(user_id, label, full_name, phone, address_line1, address_line2, city, state, pincode, is_default)
 SELECT id, 'Home', 'Rahul Sharma', '+91 98765 43210', '42, Poes Garden, Alwarpet', 'Near Greenways Road', 'Chennai', 'Tamil Nadu', '600086', true
@@ -24,217 +26,183 @@ INSERT INTO user_notification_preferences(user_id)
 SELECT id FROM users WHERE email='rahul@example.com'
 ON CONFLICT (user_id) DO NOTHING;
 
-INSERT INTO categories(name, slug, image_url, sort_order)
-VALUES ('Men', 'men', 'https://images.unsplash.com/photo-1617137968427-85924c800a22?w=300&q=80', 1)
-ON CONFLICT (slug) DO NOTHING;
-
-INSERT INTO brands(name) VALUES ('Levi''s') ON CONFLICT (name) DO NOTHING;
-
-INSERT INTO products(category_id, brand_id, name, slug, subcategory, sell_price, mrp, discount_percent, tag, offer_tag, stock, material, care, description, is_featured, rating, reviews)
-SELECT c.id, b.id, 'Oversized Graphic Tee', 'oversized-graphic-tee', 't-shirts', 1299, 2199, 41, 'SALE', 'BUY 2 @1399', 8,
-  '100% Combed Cotton 220 GSM', 'Machine wash cold. Do not bleach.',
-  'A relaxed fit graphic tee in premium combed cotton. Bold screen print inspired by urban street culture.', true, 4.4, 128
-FROM categories c, brands b WHERE c.slug='men' AND b.name='Levi''s'
-ON CONFLICT (slug) DO NOTHING;
-
-INSERT INTO product_images(product_id, image_url, alt_text, sort_order)
-SELECT id, 'https://images.unsplash.com/photo-1503341504253-dff4815485f1?w=800&q=80', name, 1 FROM products WHERE slug='oversized-graphic-tee'
-ON CONFLICT DO NOTHING;
-
-INSERT INTO product_colors(product_id, name, hex, image_index, sort_order)
-SELECT id, 'Black', '#1a1a1a', 0, 1 FROM products WHERE slug='oversized-graphic-tee'
-ON CONFLICT DO NOTHING;
-
-INSERT INTO product_sizes(product_id, size, stock, sort_order)
-SELECT id, 'M', 8, 1 FROM products WHERE slug='oversized-graphic-tee'
-ON CONFLICT (product_id, size) DO NOTHING;
-
-INSERT INTO hero_banners(kicker, title, subtitle, cta_label, cta_link, image_url, sort_order)
-VALUES ('Summer Collection 2026', 'FRESH DROPS', 'Discover bold styles made for those who move fast.', 'Shop New Arrivals', '/plp?tag=NEW', 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=1400&q=80', 1)
-ON CONFLICT DO NOTHING;
-
-INSERT INTO site_settings(key, value)
-VALUES ('footer_marquee', '{"message":"Free shipping on orders above Rs. 999"}')
-ON CONFLICT (key) DO NOTHING;
-
-INSERT INTO site_settings(key, value)
-VALUES ('announcement_bar', '{"messages":["Free delivery on orders above Rs. 999","Use FIRST10 for 10% off your first order"]}')
-ON CONFLICT (key) DO NOTHING;
-
-INSERT INTO promo_codes(code, type, value, min_cart, description)
-VALUES ('FIRST10', 'percentage', 10, 0, '10% off your first order')
-ON CONFLICT (code) DO NOTHING;
-
-INSERT INTO carts(user_id)
-SELECT id FROM users WHERE email='rahul@example.com'
-ON CONFLICT (user_id) DO NOTHING;
-
-INSERT INTO cart_items(cart_id, product_id, size, color, quantity)
-SELECT ca.id, p.id, 'M', '#1a1a1a', 1 FROM carts ca JOIN users u ON u.id=ca.user_id CROSS JOIN products p
-WHERE u.email='rahul@example.com' AND p.slug='oversized-graphic-tee'
-ON CONFLICT (cart_id, product_id, size, color) DO NOTHING;
-
-INSERT INTO orders(user_id, order_number, shipping_address, subtotal, discount_amount, shipping_amount, total, payment_method, payment_status, status)
-SELECT id, 'ORD-2026-00001', '{"fullName":"Rahul Sharma","city":"Chennai","pincode":"600086"}', 1299, 0, 0, 1299, 'razorpay', 'paid', 'paid'
-FROM users WHERE email='rahul@example.com'
-ON CONFLICT (order_number) DO NOTHING;
-
-INSERT INTO order_items(order_id, product_id, product_name, brand_name, size, color, quantity, unit_price, total_price)
-SELECT o.id, p.id, p.name, 'Levi''s', 'M', '#1a1a1a', 1, 1299, 1299 FROM orders o CROSS JOIN products p
-WHERE o.order_number='ORD-2026-00001' AND p.slug='oversized-graphic-tee'
-ON CONFLICT DO NOTHING;
-
-INSERT INTO payments(order_id, user_id, provider, provider_order_id, provider_payment_id, amount, currency, status, paid_at)
-SELECT o.id, o.user_id, 'razorpay', 'order_sample', 'pay_sample', 129900, 'INR', 'success', now()
-FROM orders o WHERE o.order_number='ORD-2026-00001'
-ON CONFLICT DO NOTHING;
-
-INSERT INTO transactions(payment_id, type, status, amount, payload)
-SELECT id, 'capture', 'success', 129900, '{"seed":true}' FROM payments WHERE provider_order_id='order_sample'
-ON CONFLICT DO NOTHING;
-
-INSERT INTO uploads(uploaded_by, url, object_key, file_name, mime_type, size_bytes)
-SELECT id, 'https://cdn.example.com/uploads/sample.jpg', 'uploads/sample.jpg', 'sample.jpg', 'image/jpeg', 1024
-FROM users WHERE email='rahul@example.com'
-ON CONFLICT DO NOTHING;
-
-INSERT INTO notifications(user_id, title, body)
-SELECT id, 'Welcome to StaffArc', 'Your account is ready.' FROM users WHERE email='rahul@example.com'
-ON CONFLICT DO NOTHING;
-
-INSERT INTO stock_notifications(product_id, email, size, color)
-SELECT id, 'rahul@example.com', 'M', 'Black' FROM products WHERE slug='oversized-graphic-tee'
-ON CONFLICT DO NOTHING;
-
+-- 8 Core Jewellery Categories
 INSERT INTO categories(name, slug, image_url, sort_order) VALUES
-('Women', 'women', 'https://images.unsplash.com/photo-1581044777550-4cfa60707c03?w=300&q=80', 2),
-('Dresses', 'dresses', 'https://images.unsplash.com/photo-1595777457583-95e059d581b8?w=300&q=80', 3),
-('Accessories', 'accessories', 'https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=300&q=80', 4),
-('Footwear', 'footwear', 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=300&q=80', 5),
-('Activewear', 'activewear', 'https://images.unsplash.com/photo-1594381898411-846e7d193883?w=300&q=80', 6),
-('Ethnic', 'ethnic', 'https://images.unsplash.com/photo-1610030469983-98e550d6193c?w=300&q=80', 7),
-('Kids', 'kids', 'https://images.unsplash.com/photo-1622290291468-a28f7a7dc6a8?w=300&q=80', 8)
-ON CONFLICT (slug) DO NOTHING;
+('Necklaces & Chokers', 'necklaces', 'https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?w=400&q=80', 1),
+('Earrings & Jhumkas', 'earrings', 'https://images.unsplash.com/photo-1630019852942-f89202989a59?w=400&q=80', 2),
+('Bangles & Kadas', 'bangles', 'https://images.unsplash.com/photo-1611591475870-8451fef06b97?w=400&q=80', 3),
+('Bridal Collection', 'bridal', 'https://images.unsplash.com/photo-1546804784-896d0dca3805?w=400&q=80', 4),
+('Silver Jewellery', 'silver-jewellery', 'https://images.unsplash.com/photo-1605100804763-247f67b3557e?w=400&q=80', 5),
+('Rings', 'rings', 'https://images.unsplash.com/photo-1603561591411-07134e71a2a9?w=400&q=80', 6),
+('Mangalsutras', 'mangalsutras', 'https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?w=400&q=80', 7),
+('Anklets & Payal', 'anklets', 'https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?w=400&q=80', 8)
+ON CONFLICT (slug) DO UPDATE SET name=EXCLUDED.name, image_url=EXCLUDED.image_url, sort_order=EXCLUDED.sort_order, deleted_at=NULL, is_active=true;
 
-INSERT INTO brands(name) VALUES ('Zara'), ('Mango'), ('H&M'), ('Only'), ('Vero Moda'), ('Puma'), ('Lavie')
+-- Brands
+INSERT INTO brands(name) VALUES 
+('Nizampilla Divya Jewellery'),
+('Royal Heritage'),
+('Divya Silver Craft'),
+('Nakshatra Signature'),
+('Vedic Gold Polish')
 ON CONFLICT (name) DO NOTHING;
 
+-- Jewellery Products
 INSERT INTO products(category_id, brand_id, name, slug, subcategory, sell_price, mrp, discount_percent, tag, offer_tag, stock, material, care, description, is_featured, rating, reviews)
 SELECT c.id, b.id, p.name, p.slug, p.subcategory, p.sell_price, p.mrp, p.discount_percent, p.tag, p.offer_tag, p.stock, p.material, p.care, p.description, p.is_featured, p.rating, p.reviews
 FROM (VALUES
-  ('women','Zara','High Waist Wide Leg Jeans','high-waist-wide-leg-jeans','jeans',2499,3999,37,'NEW','BUY 2 @1399',13,'98% Cotton 2% Elastane','Machine wash cold.','High waist wide leg jeans with a flattering relaxed fit.',true,4.6,84),
-  ('dresses','Mango','Floral Midi Dress','floral-midi-dress','midi-dresses',3199,5499,41,'NEW',null,15,'100% Viscose','Hand wash cold.','A feminine floral midi dress with wrap-style bodice and flowy skirt.',true,4.3,56),
-  ('women','Only','Structured Blazer','structured-blazer','blazers',4499,7999,43,'NEW',null,5,'60% Polyester 40% Viscose','Dry clean only.','Tailored structured blazer with a single-breasted front.',true,4.7,43),
-  ('men','Levi''s','Cargo Jogger Pants','cargo-jogger-pants','joggers',1599,2699,40,'NEW',null,20,'100% Cotton French Terry','Machine wash cold.','Relaxed cargo joggers with drawstring waist and utility pockets.',true,4.4,167),
-  ('women','Vero Moda','Ribbed Knit Sweater','ribbed-knit-sweater','sweaters',1799,2999,40,null,null,12,'50% Cotton 50% Acrylic','Hand wash cold.','Cosy ribbed knit sweater with relaxed fit and soft yarn.',false,4.5,91),
-  ('women','Zara','Wrap Midi Skirt','wrap-midi-skirt','skirts',2199,3499,37,null,null,7,'100% Polyester','Machine wash 30C.','Flowing wrap midi skirt in silky satin with adjustable tie waist.',false,4.2,38),
-  ('dresses','H&M','Printed Maxi Dress','printed-maxi-dress','maxi-dresses',2799,4499,37,null,null,9,'100% Viscose','Machine wash 30C.','Flowy printed maxi dress with V-neckline and tiered skirt.',false,4.3,54),
-  ('women','Only','Cropped Leather Jacket','cropped-leather-jacket','jackets',5999,9999,40,'NEW',null,6,'Faux leather','Wipe with damp cloth.','Cropped faux leather jacket with zip-front closure.',true,4.8,72),
-  ('accessories','Lavie','Quilted Sling Bag','quilted-sling-bag','bags',1299,2299,43,'SALE',null,18,'PU leather','Wipe clean.','Compact quilted sling bag with chain strap and secure flap.',true,4.5,61),
-  ('footwear','Puma','Court Classic Sneakers','court-classic-sneakers','sneakers',3499,5999,42,'SALE',null,16,'Synthetic upper','Wipe clean.','Everyday low-top sneakers with cushioned footbed.',true,4.4,102),
-  ('activewear','Puma','Training Track Pants','training-track-pants','track-pants',1899,2999,37,null,null,22,'Polyester blend','Machine wash cold.','Tapered track pants for training and travel days.',false,4.2,73),
-  ('ethnic','Mango','Embroidered Kurta Set','embroidered-kurta-set','kurta-sets',3299,5299,38,'NEW',null,11,'Cotton blend','Gentle machine wash.','Embroidered kurta set with straight pants and dupatta.',true,4.6,48)
+  ('necklaces','Nizampilla Divya Jewellery','Royal Kundan & Pearl Choker Set','kundan-pearl-choker-set','kundan-sets',4499,7999,44,'BESTSELLER','BRIDAL EDIT',12,'Brass alloy with 24K Micro Gold Plating & Hand-cut Kundan stones with natural freshwater pearls','Keep away from water, perfume, and harsh chemicals. Store in airtight zip pouch after use.','An opulent handcrafted choker necklace adorned with radiant Kundan stones, emerald green accents, and cascading pearl drops. Paired with matching statement earrings and a maang tikka.',true,4.8,142),
+  ('necklaces','Royal Heritage','Antique Lakshmi Temple Necklace','antique-lakshmi-temple-necklace','temple-necklaces',5899,9999,41,'NEW','TEMPLE CRAFT',8,'Temple Brass alloy with antique matte gold finish and genuine red Kemp stones','Wipe gently with dry soft cloth. Avoid direct contact with moisture.','Sacred Goddess Lakshmi motifs intricately carved in Nakshi style, bordered by Kemp cabochon stones and cluster bell drops. Complete with matching heritage jhumkas.',true,4.9,86),
+  ('rings','Divya Silver Craft','925 Pure Silver Solitaire Ring','925-pure-silver-solitaire-ring','solitaire-rings',1899,3299,42,'BESTSELLER','925 SILVER',15,'Hallmarked 92.5% Sterling Silver with Triple Rhodium Polish and 2-carat Hearts & Arrows CZ Solitaire','Comes with anti-tarnish coating. Clean with silver polishing cloth.','A breathtaking 2-carat brilliant cut CZ diamond set on a polished 925 sterling silver band with accent pavé stones. Perfect for proposals, anniversaries, and daily glamour.',true,4.7,118),
+  ('earrings','Nizampilla Divya Jewellery','Peacock Kemp Grand Jhumkas','peacock-kemp-grand-jhumkas','jhumkas',2499,4199,40,'NEW','FESTIVE',14,'Brass with 22K matte gold plating, Kemp red stones, and dangling seed pearls','Handle with care. Avoid perfumes and moisture.','Majestic twin peacocks sculpted above two-tier ornate bell domes with fine filigree work and delicate pearl hangings.',true,4.6,94),
+  ('bridal','Nakshatra Signature','American Diamond CZ Bridal Set','american-diamond-cz-bridal-set','bridal-sets',8999,14999,40,'LUXURY','BRIDAL FAVOURITE',6,'High-grade AAA Swiss Zirconia with two-tone Platinum and Rose Gold rhodium plating','Store individually in velvet box provided.','Stunning collar necklace encrusted with brilliant-cut pear and marquise CZ diamonds that glisten like natural diamonds, complete with chandelier drop earrings.',true,4.9,64),
+  ('bangles','Royal Heritage','Traditional Gold Plated Temple Kadas','traditional-gold-temple-kadas','antique-kadas',3299,5499,40,'SALE','PAIR OF 2',18,'Copper-brass base with 1 gram micro gold plating and side screw opening','Wipe with a clean dry cotton cloth. Do not soak in water.','Heavy royal kadas featuring relief carvings of floral vines and elephant motifs with secure screw closure.',true,4.5,78),
+  ('silver-jewellery','Divya Silver Craft','Oxidised Silver Tribal Hasli Necklace','oxidised-silver-tribal-hasli','oxidised-necklaces',1699,2899,41,'TRENDING',null,11,'German silver alloy with antique black oxidised polish','Keep dry. Polish with cotton to maintain vintage patina.','Bohemian rigid collar hasli necklace adorned with ghungroo bells and geometric mirror medallions.',false,4.4,52),
+  ('bangles','Nakshatra Signature','Cubic Zirconia Tennis Bracelet','cz-tennis-bracelet','cz-bangles',2199,3799,42,'BESTSELLER',null,16,'Pure brass with premium white gold rhodium plating and prong-set 4mm round brilliant CZ crystals','Remove before bathing or swimming.','Timeless tennis bracelet featuring a continuous line of individually hand-set sparkling stones with double safety clasp.',true,4.8,135),
+  ('earrings','Nizampilla Divya Jewellery','Polki & Emerald Chandbali Earrings','polki-emerald-chandbali-earrings','chandbalis',2799,4699,40,'NEW','ROYAL EDIT',10,'Gold polished alloy with uncut open-setting Polki stones, green hydro beads and pearl fringe','Store flat in the provided jewellery box.','Crescent moon chandbali earrings handcrafted with uncut Polki stones, faux Colombian emerald stones, and delicate pearl tassels.',true,4.7,67),
+  ('silver-jewellery','Divya Silver Craft','925 Silver Evil Eye Pendant Chain','silver-evil-eye-pendant-chain','925-silver-chains',1499,2499,40,'POPULAR',null,19,'Certified 925 Sterling Silver with Mother of Pearl and blue enamel eye','Tarnish-resistant finish. Avoid perfumes.','Dainty protective talisman crafted in authentic 925 silver on an adjustable 16-18 inch delicate cable chain.',false,4.6,91),
+  ('mangalsutras','Nizampilla Divya Jewellery','Classic Solitaire Mangalsutra','classic-solitaire-mangalsutra','short-mangalsutra',2299,3899,41,'DAILY WEAR',null,14,'18K yellow gold plated brass with genuine black onyx beads and solitaire CZ centerpiece','Safe for daily use. Keep away from harsh detergents.','Contemporary short mangalsutra chain with single round solitaire pendant nestled between auspicious black beads.',false,4.5,48),
+  ('bridal','Nizampilla Divya Jewellery','Bridal Kundan Matha Patti & Tikka','bridal-kundan-matha-patti','matha-patti',3499,5999,42,'BRIDAL','HANDMADE',7,'24K Gold Polish with Meenakari back-detailing and Kundan stone multi-strand hair chains','Handle gently. Secure with bobby pins provided.','Majestic multi-layered bridal headpiece that frames the forehead with luminous pearl strands and floral Kundan medallions.',true,4.9,39),
+  ('rings','Nakshatra Signature','Floral CZ Cocktail Statement Ring','floral-cz-cocktail-ring','cocktail-rings',1599,2799,43,'SALE',null,12,'High polish rhodium on brass with multi-shape marquise and round cut CZ crystals','Wipe with a soft jewellery cloth after each wear.','Grand blooming blossom cocktail ring designed to make a head-turning statement at evening galas and wedding receptions.',false,4.6,62),
+  ('anklets','Divya Silver Craft','Sterling Silver Ghungroo Payal Anklets','silver-ghungroo-payal-anklets','payal-anklets',2999,4999,40,'NEW','PAIR OF 2',9,'92.5% Purity Sterling Silver with musical silver bells and strong S-hook clasp','Clean with mild soapy water or silver dip. Dry completely.','Pure silver pair of payal anklets with sweet chime bells that ring softly with every step.',false,4.8,44),
+  ('necklaces','Nizampilla Divya Jewellery','Emerald Green Hydro Bead Layered Mala','emerald-hydro-bead-layered-mala','temple-necklaces',3199,5499,42,'ROYAL EDIT',null,10,'Faceted green hydro beads with antique gold carved spacer beads and temple brooch pendant','Do not pull abruptly. Store hanging or flat.','Grand 5-layer cascading necklace crafted with royal emerald green crystal beads, accented with antique gold polish temple spacers.',true,4.8,58)
 ) AS p(category_slug, brand_name, name, slug, subcategory, sell_price, mrp, discount_percent, tag, offer_tag, stock, material, care, description, is_featured, rating, reviews)
 JOIN categories c ON c.slug=p.category_slug
 JOIN brands b ON b.name=p.brand_name
-ON CONFLICT (slug) DO UPDATE SET stock=EXCLUDED.stock, tag=EXCLUDED.tag, is_featured=EXCLUDED.is_featured, updated_at=now();
+ON CONFLICT (slug) DO UPDATE SET 
+  category_id=EXCLUDED.category_id,
+  brand_id=EXCLUDED.brand_id,
+  name=EXCLUDED.name,
+  subcategory=EXCLUDED.subcategory,
+  sell_price=EXCLUDED.sell_price,
+  mrp=EXCLUDED.mrp,
+  discount_percent=EXCLUDED.discount_percent,
+  tag=EXCLUDED.tag,
+  offer_tag=EXCLUDED.offer_tag,
+  stock=EXCLUDED.stock,
+  material=EXCLUDED.material,
+  care=EXCLUDED.care,
+  description=EXCLUDED.description,
+  is_featured=EXCLUDED.is_featured,
+  rating=EXCLUDED.rating,
+  reviews=EXCLUDED.reviews,
+  deleted_at=NULL,
+  is_active=true,
+  updated_at=now();
 
+-- Product Images
 INSERT INTO product_images(product_id, image_url, alt_text, sort_order)
 SELECT p.id, i.url, p.name, i.sort_order
 FROM products p
 JOIN (VALUES
-  ('high-waist-wide-leg-jeans','https://images.unsplash.com/photo-1541099649105-f69ad21f3246?w=800&q=80',1),
-  ('floral-midi-dress','https://images.unsplash.com/photo-1572804013309-59a88b7e92f1?w=800&q=80',1),
-  ('structured-blazer','https://images.unsplash.com/photo-1591047139829-d91aecb6caea?w=800&q=80',1),
-  ('cargo-jogger-pants','https://images.unsplash.com/photo-1506629082955-511b1aa562c8?w=800&q=80',1),
-  ('ribbed-knit-sweater','https://images.unsplash.com/photo-1576871337632-b9aef4c17ab9?w=800&q=80',1),
-  ('wrap-midi-skirt','https://images.unsplash.com/photo-1583496661160-fb5886a0aaaa?w=800&q=80',1),
-  ('printed-maxi-dress','https://images.unsplash.com/photo-1496747611176-843222e1e57c?w=800&q=80',1),
-  ('cropped-leather-jacket','https://images.unsplash.com/photo-1551028719-00167b16eac5?w=800&q=80',1),
-  ('quilted-sling-bag','https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=800&q=80',1),
-  ('court-classic-sneakers','https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=800&q=80',1),
-  ('training-track-pants','https://images.unsplash.com/photo-1594381898411-846e7d193883?w=800&q=80',1),
-  ('embroidered-kurta-set','https://images.unsplash.com/photo-1610030469983-98e550d6193c?w=800&q=80',1)
+  ('kundan-pearl-choker-set','https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?w=800&q=80',1),
+  ('kundan-pearl-choker-set','https://images.unsplash.com/photo-1535632787350-4e68ef0ac584?w=800&q=80',2),
+  ('antique-lakshmi-temple-necklace','https://images.unsplash.com/photo-1611591475870-8451fef06b97?w=800&q=80',1),
+  ('antique-lakshmi-temple-necklace','https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?w=800&q=80',2),
+  ('925-pure-silver-solitaire-ring','https://images.unsplash.com/photo-1605100804763-247f67b3557e?w=800&q=80',1),
+  ('925-pure-silver-solitaire-ring','https://images.unsplash.com/photo-1603561591411-07134e71a2a9?w=800&q=80',2),
+  ('peacock-kemp-grand-jhumkas','https://images.unsplash.com/photo-1630019852942-f89202989a59?w=800&q=80',1),
+  ('american-diamond-cz-bridal-set','https://images.unsplash.com/photo-1546804784-896d0dca3805?w=800&q=80',1),
+  ('traditional-gold-temple-kadas','https://images.unsplash.com/photo-1611591475870-8451fef06b97?w=800&q=80',1),
+  ('oxidised-silver-tribal-hasli','https://images.unsplash.com/photo-1605100804763-247f67b3557e?w=800&q=80',1),
+  ('cz-tennis-bracelet','https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?w=800&q=80',1),
+  ('polki-emerald-chandbali-earrings','https://images.unsplash.com/photo-1630019852942-f89202989a59?w=800&q=80',1),
+  ('silver-evil-eye-pendant-chain','https://images.unsplash.com/photo-1598560917505-59a3ad559071?w=800&q=80',1),
+  ('classic-solitaire-mangalsutra','https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?w=800&q=80',1),
+  ('bridal-kundan-matha-patti','https://images.unsplash.com/photo-1546804784-896d0dca3805?w=800&q=80',1),
+  ('floral-cz-cocktail-ring','https://images.unsplash.com/photo-1603561591411-07134e71a2a9?w=800&q=80',1),
+  ('silver-ghungroo-payal-anklets','https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?w=800&q=80',1),
+  ('emerald-hydro-bead-layered-mala','https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?w=800&q=80',1)
 ) AS i(slug, url, sort_order) ON i.slug=p.slug
 ON CONFLICT DO NOTHING;
 
+-- Product Colors / Finishes
 INSERT INTO product_colors(product_id, name, hex, image_index, sort_order)
 SELECT p.id, c.name, c.hex, 0, c.sort_order
 FROM products p
 JOIN (VALUES
-  ('high-waist-wide-leg-jeans','Indigo','#1a1a2e',1),('floral-midi-dress','Pink','#f8b4d9',1),('structured-blazer','Black','#1a1a1a',1),
-  ('cargo-jogger-pants','Olive','#4a5240',1),('ribbed-knit-sweater','Cream','#f5f0eb',1),('wrap-midi-skirt','Black','#1a1a1a',1),
-  ('printed-maxi-dress','Blue','#3b82f6',1),('cropped-leather-jacket','Black','#1a1a1a',1),('quilted-sling-bag','Tan','#8B4513',1),
-  ('court-classic-sneakers','White','#ffffff',1),('training-track-pants','Navy','#334155',1),('embroidered-kurta-set','Ivory','#f8f3e7',1)
+  ('kundan-pearl-choker-set','Kundan Green','#2E8B57',1),
+  ('kundan-pearl-choker-set','Ruby Red','#9B111E',2),
+  ('antique-lakshmi-temple-necklace','Antique Gold','#B8860B',1),
+  ('925-pure-silver-solitaire-ring','925 Silver','#C0C0C0',1),
+  ('925-pure-silver-solitaire-ring','Rose Gold','#B76E79',2),
+  ('peacock-kemp-grand-jhumkas','Ruby Red & Emerald','#9B111E',1),
+  ('peacock-kemp-grand-jhumkas','22K Gold Polish','#D4AF37',2),
+  ('american-diamond-cz-bridal-set','Rose Gold','#B76E79',1),
+  ('american-diamond-cz-bridal-set','925 Silver','#C0C0C0',2),
+  ('traditional-gold-temple-kadas','22K Gold Polish','#D4AF37',1),
+  ('traditional-gold-temple-kadas','Antique Gold','#B8860B',2),
+  ('oxidised-silver-tribal-hasli','Oxidised Silver','#4A4A4A',1),
+  ('cz-tennis-bracelet','925 Silver','#C0C0C0',1),
+  ('cz-tennis-bracelet','Rose Gold','#B76E79',2),
+  ('cz-tennis-bracelet','22K Gold Polish','#D4AF37',3),
+  ('polki-emerald-chandbali-earrings','Kundan Green','#2E8B57',1),
+  ('polki-emerald-chandbali-earrings','Ruby Red','#9B111E',2),
+  ('silver-evil-eye-pendant-chain','925 Silver','#C0C0C0',1),
+  ('silver-evil-eye-pendant-chain','Rose Gold','#B76E79',2),
+  ('classic-solitaire-mangalsutra','22K Gold Polish','#D4AF37',1),
+  ('bridal-kundan-matha-patti','Pearl White','#F8F6F0',1),
+  ('bridal-kundan-matha-patti','Ruby Red & Emerald','#9B111E',2),
+  ('floral-cz-cocktail-ring','925 Silver','#C0C0C0',1),
+  ('floral-cz-cocktail-ring','Rose Gold','#B76E79',2),
+  ('silver-ghungroo-payal-anklets','925 Silver','#C0C0C0',1),
+  ('emerald-hydro-bead-layered-mala','Kundan Green','#2E8B57',1)
 ) AS c(slug, name, hex, sort_order) ON c.slug=p.slug
 ON CONFLICT DO NOTHING;
 
+-- Product Sizes / Dimensions
 INSERT INTO product_sizes(product_id, size, stock, sort_order)
 SELECT p.id, s.size, s.stock, s.sort_order
 FROM products p
 JOIN (VALUES
-  ('high-waist-wide-leg-jeans','S',4,1),('high-waist-wide-leg-jeans','M',5,2),('high-waist-wide-leg-jeans','L',4,3),
-  ('floral-midi-dress','S',5,1),('floral-midi-dress','M',5,2),('floral-midi-dress','L',5,3),
-  ('structured-blazer','S',2,1),('structured-blazer','M',2,2),('structured-blazer','L',1,3),
-  ('cargo-jogger-pants','M',8,1),('cargo-jogger-pants','L',8,2),('cargo-jogger-pants','XL',4,3),
-  ('ribbed-knit-sweater','S',4,1),('ribbed-knit-sweater','M',4,2),('ribbed-knit-sweater','L',4,3),
-  ('wrap-midi-skirt','S',3,1),('wrap-midi-skirt','M',3,2),('wrap-midi-skirt','L',1,3),
-  ('printed-maxi-dress','S',3,1),('printed-maxi-dress','M',3,2),('printed-maxi-dress','L',3,3),
-  ('cropped-leather-jacket','S',2,1),('cropped-leather-jacket','M',2,2),('cropped-leather-jacket','L',2,3),
-  ('quilted-sling-bag','Free Size',18,1),('court-classic-sneakers','7',5,1),('court-classic-sneakers','8',6,2),('court-classic-sneakers','9',5,3),
-  ('training-track-pants','M',8,1),('training-track-pants','L',8,2),('training-track-pants','XL',6,3),
-  ('embroidered-kurta-set','S',4,1),('embroidered-kurta-set','M',4,2),('embroidered-kurta-set','L',3,3)
+  ('kundan-pearl-choker-set','Free Size',12,1),
+  ('antique-lakshmi-temple-necklace','Adjustable Dori',8,1),
+  ('925-pure-silver-solitaire-ring','Size 12',4,1),
+  ('925-pure-silver-solitaire-ring','Size 14',5,2),
+  ('925-pure-silver-solitaire-ring','Size 16',4,3),
+  ('925-pure-silver-solitaire-ring','Adjustable',2,4),
+  ('peacock-kemp-grand-jhumkas','Free Size',14,1),
+  ('american-diamond-cz-bridal-set','Free Size',6,1),
+  ('traditional-gold-temple-kadas','2.4',6,1),
+  ('traditional-gold-temple-kadas','2.6',8,2),
+  ('traditional-gold-temple-kadas','2.8',4,3),
+  ('oxidised-silver-tribal-hasli','Adjustable Dori',11,1),
+  ('cz-tennis-bracelet','Free Size',16,1),
+  ('polki-emerald-chandbali-earrings','Free Size',10,1),
+  ('silver-evil-eye-pendant-chain','Adjustable',19,1),
+  ('classic-solitaire-mangalsutra','18 Inch',14,1),
+  ('bridal-kundan-matha-patti','Free Size',7,1),
+  ('floral-cz-cocktail-ring','Adjustable',6,1),
+  ('floral-cz-cocktail-ring','Size 14',3,2),
+  ('floral-cz-cocktail-ring','Size 16',3,3),
+  ('silver-ghungroo-payal-anklets','10 Inch',5,1),
+  ('silver-ghungroo-payal-anklets','10.5 Inch',4,2),
+  ('emerald-hydro-bead-layered-mala','Adjustable Dori',10,1)
 ) AS s(slug, size, stock, sort_order) ON s.slug=p.slug
 ON CONFLICT (product_id, size) DO UPDATE SET stock=EXCLUDED.stock, updated_at=now();
 
-INSERT INTO hero_banners(kicker, title, subtitle, cta_label, cta_link, image_url, video_url, sort_order)
-VALUES
-('Video Edit', 'MOVE IN STYLE', 'A motion-led hero demo for campaign drops.', 'Explore Styles', '/plp', 'https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=1400&q=80', 'https://videos.pexels.com/video-files/853889/853889-hd_1920_1080_25fps.mp4', 2),
-('Women''s Edit', 'POWER DRESSING', 'Bold silhouettes. Refined details. Fashion that speaks.', 'Shop Women''s', '/plp?category=women', 'https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=1400&q=80', null, 3)
-ON CONFLICT DO NOTHING;
+-- Hero Banners
+DELETE FROM hero_banners;
+INSERT INTO hero_banners(kicker, title, subtitle, cta_label, cta_link, image_url, sort_order) VALUES
+('Bridal & Festive 2026', 'ROYAL HERITAGE', 'Handcrafted 22K gold polish & authentic Kundan bridal sets made to captivate.', 'Explore Bridal Sets', '/plp?category=bridal', 'https://images.unsplash.com/photo-1546804784-896d0dca3805?w=1400&q=80', 1),
+('925 Sterling Silver', 'CELESTIAL SPARKLE', 'Pure 92.5 silver jewellery with high-grade CZ diamonds and rhodium finish.', 'Shop Silver Collection', '/plp?category=silver-jewellery', 'https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?w=1400&q=80', 2),
+('Temple Craft Edit', 'TEMPLE & JHUMKAS', 'Traditional South Indian Kemp stone jhumkas, chokers and nakshi craftsmanship.', 'View Traditional Designs', '/plp?category=earrings', 'https://images.unsplash.com/photo-1630019852942-f89202989a59?w=1400&q=80', 3);
 
+-- Site Settings
+INSERT INTO site_settings(key, value) VALUES
+('footer_marquee', '{"message":"Free insured delivery on orders above Rs. 999"}'),
+('announcement_bar', '{"messages":["Complimentary delivery on jewellery orders above Rs. 999","Use code FIRST10 for 10% off your first order"]}'),
+('branding', '{"storeName":"Nizampilla Divya Jewellery"}')
+ON CONFLICT (key) DO UPDATE SET value=EXCLUDED.value, updated_at=now(), is_active=true, deleted_at=NULL;
+
+-- Promo Codes
 INSERT INTO promo_codes(code, type, value, min_cart, description) VALUES
+('FIRST10', 'percentage', 10, 0, '10% off your first order'),
 ('FREESHIP', 'shipping', 0, 0, 'Free shipping applied!'),
 ('SAVE500', 'fixed', 500, 2000, '500 off on orders above 2000')
 ON CONFLICT (code) DO NOTHING;
 
-INSERT INTO products(category_id, brand_id, name, slug, subcategory, sell_price, mrp, discount_percent, tag, offer_tag, stock, material, care, description, is_featured, rating, reviews)
-SELECT c.id, b.id, p.name, p.slug, p.subcategory, p.sell_price, p.mrp, p.discount_percent, p.tag, p.offer_tag, 0, p.material, p.care, p.description, false, p.rating, p.reviews
-FROM (VALUES
-  ('men','H&M','Slim Fit Chinos','slim-fit-chinos','trousers',999,1799,44,'SALE',null,'98% Cotton 2% Elastane','Machine wash 40C.','Slim fit chinos in soft stretch cotton twill.',4.1,200),
-  ('women','Vero Moda','V-Neck Knit Top','v-neck-knit-top','tops',899,1599,43,'SALE',null,'80% Viscose 20% Nylon','Hand wash cold.','Softly structured V-neck knit top with subtle rib texture.',4.0,112)
-) AS p(category_slug, brand_name, name, slug, subcategory, sell_price, mrp, discount_percent, tag, offer_tag, material, care, description, rating, reviews)
-JOIN categories c ON c.slug=p.category_slug
-JOIN brands b ON b.name=p.brand_name
-ON CONFLICT (slug) DO UPDATE SET stock=0, tag=EXCLUDED.tag, updated_at=now();
-
-INSERT INTO product_images(product_id, image_url, alt_text, sort_order)
-SELECT p.id, i.url, p.name, 1
-FROM products p
-JOIN (VALUES
-  ('slim-fit-chinos','https://images.unsplash.com/photo-1473966968600-fa801b869a1a?w=800&q=80'),
-  ('v-neck-knit-top','https://images.unsplash.com/photo-1564859228273-274232fdb516?w=800&q=80')
-) AS i(slug, url) ON i.slug=p.slug
-ON CONFLICT DO NOTHING;
-
-INSERT INTO product_colors(product_id, name, hex, image_index, sort_order)
-SELECT p.id, c.name, c.hex, 0, c.sort_order
-FROM products p
-JOIN (VALUES
-  ('slim-fit-chinos','Khaki','#c4a882',1),('slim-fit-chinos','Navy','#334155',2),('slim-fit-chinos','Black','#1a1a1a',3),
-  ('v-neck-knit-top','White','#ffffff',1),('v-neck-knit-top','Yellow','#fde68a',2),('v-neck-knit-top','Blush','#fca5a5',3)
-) AS c(slug, name, hex, sort_order) ON c.slug=p.slug
-ON CONFLICT DO NOTHING;
-
-INSERT INTO product_sizes(product_id, size, stock, sort_order)
-SELECT p.id, s.size, 0, s.sort_order
-FROM products p
-JOIN (VALUES
-  ('slim-fit-chinos','28',1),('slim-fit-chinos','30',2),('slim-fit-chinos','32',3),('slim-fit-chinos','34',4),
-  ('v-neck-knit-top','XS',1),('v-neck-knit-top','S',2),('v-neck-knit-top','M',3),('v-neck-knit-top','L',4)
-) AS s(slug, size, sort_order) ON s.slug=p.slug
-ON CONFLICT (product_id, size) DO UPDATE SET stock=0, updated_at=now();
-
+-- Populate Category Subcategories
 INSERT INTO category_subcategories(category_id, name, slug, sort_order)
 SELECT c.id, initcap(replace(p.subcategory, '-', ' ')), p.subcategory, row_number() OVER (PARTITION BY c.id ORDER BY p.subcategory)
 FROM (
@@ -245,6 +213,7 @@ FROM (
 JOIN categories c ON c.id=p.category_id
 ON CONFLICT (category_id, slug) DO NOTHING;
 
+-- Populate Catalog Colors
 INSERT INTO catalog_colors(name, hex, sort_order)
 SELECT name, hex, row_number() OVER (ORDER BY lower(name), lower(hex))
 FROM (
@@ -254,6 +223,7 @@ FROM (
 ) colors
 ON CONFLICT (name, hex) DO UPDATE SET deleted_at=NULL, is_active=true, status='active', updated_at=now();
 
+-- Populate Catalog Sizes
 INSERT INTO catalog_sizes(size, sort_order)
 SELECT size, row_number() OVER (ORDER BY size)
 FROM (

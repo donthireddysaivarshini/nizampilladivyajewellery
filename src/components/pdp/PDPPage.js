@@ -17,48 +17,34 @@ const titleCase = value =>
     ?.replace(/-/g, ' ')
     .replace(/\b\w/g, char => char.toUpperCase()) || 'Regular'
 
-const topwear = ['t-shirts', 'blazers', 'sweaters', 'tops', 'jackets']
-const bottomwear = ['jeans', 'trousers', 'skirts', 'joggers']
-
 function getHighlightCategory(product) {
-  if (topwear.includes(product.subcategory)) return 'Topwear'
-  if (bottomwear.includes(product.subcategory)) return 'Bottomwear'
-  if (product.category === 'dresses') return 'Dress'
-  if (product.subcategory === 'co-ords') return 'Co-ord Set'
   return titleCase(product.category)
 }
 
 function getProductType(product) {
-  if (product.subcategory === 't-shirts') return product.name.includes('Oversized') ? 'Oversized Tshirt' : 'Tshirt'
-  return titleCase(product.subcategory)
+  if (product.subcategory) return titleCase(product.subcategory.replace(/-/g, ' '))
+  return 'Fine Jewellery'
 }
 
-function getFit(product) {
-  const text = `${product.name} ${product.description}`.toLowerCase()
-  if (text.includes('oversized')) return 'Oversized Fit'
-  if (text.includes('slim')) return 'Slim Fit'
-  if (text.includes('wide leg')) return 'Wide Leg Fit'
-  if (text.includes('relaxed')) return 'Relaxed Fit'
-  if (text.includes('flowy')) return 'Flowy Fit'
-  return 'Regular Fit'
+function getPlating(product) {
+  const text = `${product.name} ${product.description || ''} ${product.material || ''}`.toLowerCase()
+  if (text.includes('antique')) return 'Antique Gold Polish'
+  if (text.includes('oxidised') || text.includes('oxidized')) return 'Oxidised Silver'
+  if (text.includes('rose gold')) return 'Rose Gold Plated'
+  if (text.includes('rhodium')) return 'Rhodium / White Gold'
+  if (text.includes('silver') || text.includes('925')) return '925 Sterling Silver'
+  return '22K Micro Gold Plated'
 }
 
-function getClosure(product) {
-  const text = `${product.name} ${product.description}`.toLowerCase()
-  if (text.includes('zip')) return 'Zip Closure'
-  if (text.includes('button')) return 'Button Closure'
-  if (text.includes('drawstring')) return 'Drawstring Closure'
-  if (text.includes('tie')) return 'Tie Closure'
-  return 'No Closure'
-}
-
-function getLength(product) {
-  const text = `${product.name} ${product.description}`.toLowerCase()
-  if (text.includes('cropped')) return 'Cropped'
-  if (text.includes('midi')) return 'Midi'
-  if (text.includes('maxi')) return 'Maxi'
-  if (text.includes('ankle')) return 'Ankle Length'
-  return 'Regular'
+function getGemstone(product) {
+  const text = `${product.name} ${product.description || ''} ${product.material || ''}`.toLowerCase()
+  if (text.includes('kundan')) return 'Hand-cut Kundan Stones'
+  if (text.includes('polki')) return 'Uncut Polki & Hydro Beads'
+  if (text.includes('kemp')) return 'Sacred Kemp Red Stones'
+  if (text.includes('cz') || text.includes('zirconia') || text.includes('solitaire') || text.includes('diamond')) return 'AAA Swiss Cubic Zirconia'
+  if (text.includes('pearl')) return 'Freshwater Pearls'
+  if (text.includes('emerald')) return 'Hydro Emerald & CZ'
+  return 'Premium Crystals & Stones'
 }
 
 
@@ -508,9 +494,9 @@ function PDPContent() {
   const highlights = [
     ['Product Category', ph.category || getHighlightCategory(product)],
     ['Product Type', ph.type || getProductType(product)],
-    ['Fit', ph.fit || getFit(product)],
-    ['Closure', ph.closure || getClosure(product)],
-    ['Length', ph.length || getLength(product)],
+    ['Plating / Finish', ph.plating || getPlating(product)],
+    ['Gemstone / Stones', ph.gemstone || getGemstone(product)],
+    ['Base Metal', ph.metal || product.material || '925 Sterling Silver / Alloy'],
   ]
 
   const crumbs = [
