@@ -11,7 +11,8 @@
     "start": "node src/server.js",
     "test": "vitest run",
     "db:schema": "psql \"$DATABASE_URL\" -f db/schema.sql",
-    "db:seed": "psql \"$DATABASE_URL\" -f db/seed.sql"
+    "db:seed": "psql \"$DATABASE_URL\" -f db/seed.sql",
+    "db:seed:node": "node scripts/run_seed.js"
   },
   "dependencies": {
     "@fastify/cors": "^9.0.1",

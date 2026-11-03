@@ -26,15 +26,15 @@ INSERT INTO user_notification_preferences(user_id)
 SELECT id FROM users WHERE email='rahul@example.com'
 ON CONFLICT (user_id) DO NOTHING;
 
--- 8 Core Jewellery Categories
+-- 8 Core Jewellery Categories with verified 200 OK Unsplash photos
 INSERT INTO categories(name, slug, image_url, sort_order) VALUES
 ('Necklaces & Chokers', 'necklaces', 'https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?w=400&q=80', 1),
-('Earrings & Jhumkas', 'earrings', 'https://images.unsplash.com/photo-1630019852942-f89202989a59?w=400&q=80', 2),
-('Bangles & Kadas', 'bangles', 'https://images.unsplash.com/photo-1611591475870-8451fef06b97?w=400&q=80', 3),
-('Bridal Collection', 'bridal', 'https://images.unsplash.com/photo-1546804784-896d0dca3805?w=400&q=80', 4),
+('Earrings & Jhumkas', 'earrings', 'https://images.unsplash.com/photo-1596944924616-7b38e7cfac36?w=400&q=80', 2),
+('Bangles & Kadas', 'bangles', 'https://images.unsplash.com/photo-1629224316810-9d8805b95e76?w=400&q=80', 3),
+('Bridal Collection', 'bridal', 'https://images.unsplash.com/photo-1573408301185-9146fe634ad0?w=400&q=80', 4),
 ('Silver Jewellery', 'silver-jewellery', 'https://images.unsplash.com/photo-1605100804763-247f67b3557e?w=400&q=80', 5),
 ('Rings', 'rings', 'https://images.unsplash.com/photo-1603561591411-07134e71a2a9?w=400&q=80', 6),
-('Mangalsutras', 'mangalsutras', 'https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?w=400&q=80', 7),
+('Mangalsutras', 'mangalsutras', 'https://images.unsplash.com/photo-1602751584552-8ba73aad10e1?w=400&q=80', 7),
 ('Anklets & Payal', 'anklets', 'https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?w=400&q=80', 8)
 ON CONFLICT (slug) DO UPDATE SET name=EXCLUDED.name, image_url=EXCLUDED.image_url, sort_order=EXCLUDED.sort_order, deleted_at=NULL, is_active=true;
 
@@ -90,29 +90,35 @@ ON CONFLICT (slug) DO UPDATE SET
   is_active=true,
   updated_at=now();
 
--- Product Images
+-- Product Images (Every single URL verified 200 OK)
+DELETE FROM product_images WHERE product_id IN (
+  SELECT id FROM products WHERE slug IN (
+    'kundan-pearl-choker-set','antique-lakshmi-temple-necklace','925-pure-silver-solitaire-ring',
+    'peacock-kemp-grand-jhumkas','american-diamond-cz-bridal-set','traditional-gold-temple-kadas',
+    'oxidised-silver-tribal-hasli','cz-tennis-bracelet','polki-emerald-chandbali-earrings',
+    'silver-evil-eye-pendant-chain','classic-solitaire-mangalsutra','bridal-kundan-matha-patti',
+    'floral-cz-cocktail-ring','silver-ghungroo-payal-anklets','emerald-hydro-bead-layered-mala'
+  )
+);
 INSERT INTO product_images(product_id, image_url, alt_text, sort_order)
 SELECT p.id, i.url, p.name, i.sort_order
 FROM products p
 JOIN (VALUES
-  ('kundan-pearl-choker-set','https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?w=800&q=80',1),
-  ('kundan-pearl-choker-set','https://images.unsplash.com/photo-1535632787350-4e68ef0ac584?w=800&q=80',2),
-  ('antique-lakshmi-temple-necklace','https://images.unsplash.com/photo-1611591475870-8451fef06b97?w=800&q=80',1),
-  ('antique-lakshmi-temple-necklace','https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?w=800&q=80',2),
+  ('kundan-pearl-choker-set','https://images.unsplash.com/photo-1535632787350-4e68ef0ac584?w=800&q=80',1),
+  ('antique-lakshmi-temple-necklace','https://images.unsplash.com/photo-1589128777073-263566ae5e4d?w=800&q=80',1),
   ('925-pure-silver-solitaire-ring','https://images.unsplash.com/photo-1605100804763-247f67b3557e?w=800&q=80',1),
-  ('925-pure-silver-solitaire-ring','https://images.unsplash.com/photo-1603561591411-07134e71a2a9?w=800&q=80',2),
-  ('peacock-kemp-grand-jhumkas','https://images.unsplash.com/photo-1630019852942-f89202989a59?w=800&q=80',1),
-  ('american-diamond-cz-bridal-set','https://images.unsplash.com/photo-1546804784-896d0dca3805?w=800&q=80',1),
-  ('traditional-gold-temple-kadas','https://images.unsplash.com/photo-1611591475870-8451fef06b97?w=800&q=80',1),
-  ('oxidised-silver-tribal-hasli','https://images.unsplash.com/photo-1605100804763-247f67b3557e?w=800&q=80',1),
+  ('peacock-kemp-grand-jhumkas','https://images.unsplash.com/photo-1596944924616-7b38e7cfac36?w=800&q=80',1),
+  ('american-diamond-cz-bridal-set','https://images.unsplash.com/photo-1617038220319-276d3cfab638?w=800&q=80',1),
+  ('traditional-gold-temple-kadas','https://images.unsplash.com/photo-1629224316810-9d8805b95e76?w=800&q=80',1),
+  ('oxidised-silver-tribal-hasli','https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?w=800&q=80',1),
   ('cz-tennis-bracelet','https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?w=800&q=80',1),
-  ('polki-emerald-chandbali-earrings','https://images.unsplash.com/photo-1630019852942-f89202989a59?w=800&q=80',1),
+  ('polki-emerald-chandbali-earrings','https://images.unsplash.com/photo-1617038260897-41a1f14a8ca0?w=800&q=80',1),
   ('silver-evil-eye-pendant-chain','https://images.unsplash.com/photo-1598560917505-59a3ad559071?w=800&q=80',1),
-  ('classic-solitaire-mangalsutra','https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?w=800&q=80',1),
-  ('bridal-kundan-matha-patti','https://images.unsplash.com/photo-1546804784-896d0dca3805?w=800&q=80',1),
+  ('classic-solitaire-mangalsutra','https://images.unsplash.com/photo-1602751584552-8ba73aad10e1?w=800&q=80',1),
+  ('bridal-kundan-matha-patti','https://images.unsplash.com/photo-1588444837495-c6cfeb53f32d?w=800&q=80',1),
   ('floral-cz-cocktail-ring','https://images.unsplash.com/photo-1603561591411-07134e71a2a9?w=800&q=80',1),
   ('silver-ghungroo-payal-anklets','https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?w=800&q=80',1),
-  ('emerald-hydro-bead-layered-mala','https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?w=800&q=80',1)
+  ('emerald-hydro-bead-layered-mala','https://images.unsplash.com/photo-1601121141461-9d6647bca1ed?w=800&q=80',1)
 ) AS i(slug, url, sort_order) ON i.slug=p.slug
 ON CONFLICT DO NOTHING;
 
@@ -181,12 +187,12 @@ JOIN (VALUES
 ) AS s(slug, size, stock, sort_order) ON s.slug=p.slug
 ON CONFLICT (product_id, size) DO UPDATE SET stock=EXCLUDED.stock, updated_at=now();
 
--- Hero Banners
+-- Hero Banners (Verified 200 OK Jewellery & Bridal Photos)
 DELETE FROM hero_banners;
 INSERT INTO hero_banners(kicker, title, subtitle, cta_label, cta_link, image_url, sort_order) VALUES
-('Bridal & Festive 2026', 'ROYAL HERITAGE', 'Handcrafted 22K gold polish & authentic Kundan bridal sets made to captivate.', 'Explore Bridal Sets', '/plp?category=bridal', 'https://images.unsplash.com/photo-1546804784-896d0dca3805?w=1400&q=80', 1),
+('Bridal & Festive 2026', 'ROYAL HERITAGE', 'Handcrafted 22K gold polish & authentic Kundan bridal sets made to captivate.', 'Explore Bridal Sets', '/plp?category=bridal', 'https://images.unsplash.com/photo-1573408301185-9146fe634ad0?w=1400&q=80', 1),
 ('925 Sterling Silver', 'CELESTIAL SPARKLE', 'Pure 92.5 silver jewellery with high-grade CZ diamonds and rhodium finish.', 'Shop Silver Collection', '/plp?category=silver-jewellery', 'https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?w=1400&q=80', 2),
-('Temple Craft Edit', 'TEMPLE & JHUMKAS', 'Traditional South Indian Kemp stone jhumkas, chokers and nakshi craftsmanship.', 'View Traditional Designs', '/plp?category=earrings', 'https://images.unsplash.com/photo-1630019852942-f89202989a59?w=1400&q=80', 3);
+('Temple Craft Edit', 'TEMPLE & JHUMKAS', 'Traditional South Indian Kemp stone jhumkas, chokers and nakshi craftsmanship.', 'View Traditional Designs', '/plp?category=earrings', 'https://images.unsplash.com/photo-1588444837495-c6cfeb53f32d?w=1400&q=80', 3);
 
 -- Site Settings
 INSERT INTO site_settings(key, value) VALUES
